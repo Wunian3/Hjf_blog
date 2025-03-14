@@ -22,3 +22,26 @@ site_inf:
   name: 雾念的BLOG
   job: 有朝一日成为全栈
   slogan: 雾念的BLOG
+jwt:
+  secret: hjf
+  expires: 48
+  issuer: xx
+qq:
+  app_id: "xx"
+  key: xx
+  redirect: http://xx.xx.com/login?flag=qq
+email:
+  host: stmp.qq.com
+  port: 465
+  user: xxx@qq.com
+  password: xxx
+  default_from_email: hjfBlog
+  use-ssl: xx
+  user-tls: xx
+qi_niu:
+  access_key: UMM-xx-FdRIf-xx
+  secret_key: xx
+  bucket: hjfBlog
+  cdn: xx://xx.xx.com/
+  zone: xx
+  size: 5

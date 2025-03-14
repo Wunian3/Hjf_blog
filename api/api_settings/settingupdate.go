@@ -51,13 +51,13 @@ func (ApiSettings) SettingsInfoUpdate(c *gin.Context) {
 		}
 		global.Config.QiNiu = inf
 	case "jwt":
-		var inf conf.Jwy
+		var inf conf.Jwt
 		err = c.ShouldBindJSON(&inf)
 		if err != nil {
 			res.FailWithCode(res.ArgumentError, c)
 			return
 		}
-		global.Config.Jwy = inf
+		global.Config.Jwt = inf
 	default:
 		res.FailWithMessage("没有对应的配置信息", c)
 		return
