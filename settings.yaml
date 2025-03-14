@@ -15,3 +15,10 @@ system:
   host: "0.0.0.0"
   port: 8080
   env: release
+site_inf:
+  created_at: "2025-3-10"
+  title: hjf_wunian的BLOG
+  email: 1243624625@qq.com
+  name: 雾念的BLOG
+  job: 有朝一日成为全栈
+  slogan: 雾念的BLOG
