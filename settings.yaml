@@ -5,6 +5,7 @@ mysql:
   user: root
   password: 123456
   log_level: dev
+  config: "charset=utf8mb4&parseTime=True&loc=Local"
 logger:
   level: info
   director: log
@@ -17,7 +18,7 @@ system:
   env: release
 upload:
   size: 2
-  path: uploads/file/xxx
+  path: uploads/file/
 site_inf:
   created_at: "2025-3-10"
   title: hjf_wunian的BLOG
@@ -43,9 +44,10 @@ email:
   user-tls: xx
 qi_niu:
   enable: false
-  access_key: UMM-xx-FdRIf-xx
-  secret_key: xx
+  access_key: w0_GVYiOBUeSpg4pGbsHGBTa9geB1WWJqUXzjj2z
+  secret_key: ogktTWTpumr2h5oUbRGbiz2EPjZ9ltqYlr4psOpm
   bucket: hjfBlog
   cdn: xx://xx.xx.com/
   zone: xx
   size: 5
+  prefix: "hjfBlog"

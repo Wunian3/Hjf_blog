@@ -1,0 +1,33 @@
+package common
+
+import (
+	"blog_server/global"
+	"blog_server/models"
+	"gorm.io/gorm"
+)
+
+type Option struct {
+	models.PageInf
+	Debug bool
+}
+
+func ComList[T any](model T, option Option) (list []T, count int64, err error) {
+
+	DB := global.DB
+	if option.Debug {
+		DB = global.DB.Session(&gorm.Session{Logger: global.MysqlLog})
+	}
+	if option.Sort == "" {
+		option.Sort = "created_at desc"
+	}
+	//按照时间往前排
+	DB.Model(model).Count(&count)
+	// count = DB.Select("id").Find(&list).RowsAffected
+	offset := (option.Page - 1) * option.Limit
+	if offset < 0 {
+		offset = 0
+	}
+	err = DB.Limit(option.Limit).Offset(offset).Order(option.Sort).Find(&list).Error
+
+	return list, count, err
+}

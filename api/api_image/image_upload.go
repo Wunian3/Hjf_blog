@@ -3,6 +3,8 @@ package api_image
 import (
 	"blog_server/global"
 	"blog_server/models/res"
+	"blog_server/service"
+	"blog_server/service/common/ser_img"
 	"github.com/gin-gonic/gin"
 	"io/fs"
 	"os"
@@ -54,19 +56,17 @@ func (ApiImage) ImageUploadView(c *gin.Context) {
 	}
 
 	// 不存在就创建
-	var resList []image_ser.FileUploadResponse
+	var resList []ser_img.FileUploadResponse
 
 	for _, file := range fileList {
 
 		// 上传文件
-		serviceRes := service.ServiceApp.ImageService.ImageUploadService(file)
+		serviceRes := service.ServiceGroupApp.ServiceImage.ServiceImageUpload(file)
 		if !serviceRes.IsSuccess {
 			resList = append(resList, serviceRes)
 			continue
 		}
-		// 成功的
 		if !global.Config.QiNiu.Enable {
-			// 本地还得保存一下
 			err = c.SaveUploadedFile(file, serviceRes.FileName)
 			if err != nil {
 				global.Log.Error(err)
