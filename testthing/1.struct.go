@@ -1,4 +1,4 @@
-package testthing
+package main
 
 import (
 	"blog_server/models"

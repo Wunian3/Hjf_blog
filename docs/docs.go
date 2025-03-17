@@ -431,8 +431,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "127.0.0.01:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "blog_server API文档",
-	Description:      "blog_server API文档",
+	Title:            "HJF_BLOG_SERVER API文档",
+	Description:      "hjf_blog_server API文档",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

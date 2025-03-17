@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ImageListView 图片列表
+// ImageList 图片列表
 // @Tags 图片管理
 // @Summary 图片列表
 // @Description 图片列表

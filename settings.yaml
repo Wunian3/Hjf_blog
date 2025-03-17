@@ -29,7 +29,7 @@ site_inf:
 jwt:
   secret: hjf
   expires: 48
-  issuer: xx
+  issuer: "1234"
 qq:
   app_id: "xx"
   key: xx
