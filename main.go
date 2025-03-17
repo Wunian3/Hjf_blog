@@ -2,6 +2,7 @@ package main
 
 import (
 	"blog_server/core"
+	_ "blog_server/docs"
 	"blog_server/flag"
 	"blog_server/global"
 	"blog_server/router"
@@ -9,8 +10,13 @@ import (
 	"fmt"
 )
 
+// 配置
+// @title blog_server API文档
+// @version 1.0
+// @description blog_server API文档
+// @host 127.0.0.01:8080
+// @BasePath /
 func main() {
-	//配置
 	core.IninCf()
 	global.Log = core.InitLog()
 	//connect hblog_db

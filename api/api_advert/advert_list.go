@@ -8,6 +8,14 @@ import (
 	"strings"
 )
 
+// AdvertListView 广告列表
+// @Tags 广告列表
+// @Summary 广告列表
+// @Description 广告列表
+// @Param data query models.PageInf   false  "id列表"
+// @Router /api/adts [get]
+// @Produce json
+// @Success 200 {object} res.Response{data=res.ListRes[models.AdtModel]}
 func (ApiAdvert) AdvertListView(c *gin.Context) {
 	var cr models.PageInf
 	if err := c.ShouldBindQuery(&cr); err != nil {

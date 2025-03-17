@@ -1,0 +1,165 @@
+basePath: /
+definitions:
+  api_advert.AdvertRequest:
+    properties:
+      href:
+        description: 链接
+        type: string
+      images:
+        type: string
+      is_show:
+        type: boolean
+      title:
+        type: string
+    required:
+    - href
+    - images
+    - title
+    type: object
+  models.AdtModel:
+    properties:
+      createdAt:
+        type: string
+      href:
+        description: 链接
+        type: string
+      id:
+        type: integer
+      images:
+        description: 图片
+        type: string
+      is_show:
+        type: boolean
+      title:
+        description: 标题
+        type: string
+    type: object
+  models.RemoveRequest:
+    properties:
+      id_list:
+        items:
+          type: integer
+        type: array
+    type: object
+  res.ListRes-models_AdtModel:
+    properties:
+      count:
+        type: integer
+      list:
+        $ref: '#/definitions/models.AdtModel'
+    type: object
+  res.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+host: 127.0.0.01:8080
+info:
+  contact: {}
+  description: blog_server API文档
+  title: blog_server API文档
+  version: "1.0"
+paths:
+  /api/adts:
+    delete:
+      description: 广告删除
+      parameters:
+      - description: 表示多个参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.RemoveRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: 广告删除
+      tags:
+      - 广告删除
+    get:
+      description: 广告列表
+      parameters:
+      - in: query
+        name: key
+        type: string
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/res.ListRes-models_AdtModel'
+              type: object
+      summary: 广告列表
+      tags:
+      - 广告列表
+    post:
+      description: 广告添加
+      parameters:
+      - description: 表示多个参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/api_advert.AdvertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 广告添加
+      tags:
+      - 广告管理
+  /api/adts/:id:
+    put:
+      description: 广告编辑
+      parameters:
+      - description: 广告参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/api_advert.AdvertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: 广告编辑
+      tags:
+      - 广告编辑
+swagger: "2.0"
