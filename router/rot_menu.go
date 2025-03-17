@@ -7,7 +7,8 @@ func (router RouterGroup) RouterMenu() {
 	router.POST("menus", apiuse.MenuCreate)
 	router.GET("menus", apiuse.MenuList)
 	router.GET("menus_name", apiuse.MenuNameList)
-	//router.DELETE("menus", apiuse.ImageDeleteView)
+	router.DELETE("menus", apiuse.MenuDelete)
 	router.PUT("menus/:id", apiuse.MenuUpdate)
+	router.GET("menus/:id", apiuse.MenuInf)
 
 }
