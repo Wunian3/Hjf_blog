@@ -8,10 +8,11 @@ import (
 )
 
 type AdvertRequest struct {
-	Title  string `json:"title" binding:"required" msg:"请输入标题"`
-	Href   string `json:"href" binding:"required,url" msg:"跳转链接非法"` // 链接
-	Images string `json:"images" binding:"required,url" msg:"图片地址非法"`
-	IsShow bool   `json:"is_show" binding:"required" msg:"请选择是否展示"`
+	Title  string `json:"title" binding:"required" msg:"请输入标题" structs:"title"`
+	Href   string `json:"href" binding:"required,url" msg:"跳转链接非法" structs:"href"` // 链接
+	Images string `json:"images" binding:"required,url" msg:"图片地址非法" structs:"images"`
+	IsShow bool   `json:"is_show"  structs:"is_show"`
+	//binding:"required" msg:"请选择是否展示"
 }
 
 func (ApiAdvert) AdvertCreateView(c *gin.Context) {
