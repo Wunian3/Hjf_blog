@@ -15,7 +15,7 @@ import (
 // @Router /api/images [get]
 // @Produce json
 // @Success 200 {object} res.Response{data=res.ListRes[models.BannerModel]}
-func (ApiImage) ImageListView(c *gin.Context) {
+func (ApiImage) ImageList(c *gin.Context) {
 	var cr models.PageInf
 	err := c.ShouldBindQuery(&cr)
 	if err != nil {

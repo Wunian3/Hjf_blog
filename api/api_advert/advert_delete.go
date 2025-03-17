@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// AdvertDeleteView 广告删除
+// AdvertDelete 广告删除
 // @Tags 广告管理
 // @Summary 广告删除
 // @Description 广告删除
@@ -16,7 +16,7 @@ import (
 // @Router /api/adts [delete]
 // @Produce json
 // @Success 200 {object} res.Response{data=string}
-func (ApiAdvert) AdvertDeleteView(c *gin.Context) {
+func (ApiAdvert) AdvertDelete(c *gin.Context) {
 	var cr models.RemoveRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {

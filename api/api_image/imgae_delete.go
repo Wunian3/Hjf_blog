@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (ApiImage) ImageDeleteView(c *gin.Context) {
+func (ApiImage) ImageDelete(c *gin.Context) {
 	var cr models.RemoveRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {

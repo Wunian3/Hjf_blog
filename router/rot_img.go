@@ -4,10 +4,10 @@ import "blog_server/api"
 
 func (router RouterGroup) RouterImages() {
 	apiuse := api.ApiGroupApp.ApiImages
-	router.POST("images", apiuse.ImageUploadView)
-	router.GET("images", apiuse.ImageListView)
+	router.POST("images", apiuse.ImageUpload)
+	router.GET("images", apiuse.ImageList)
 	router.GET("images_name", apiuse.ImagNameList)
-	router.DELETE("images", apiuse.ImageDeleteView)
-	router.PUT("images", apiuse.ImageUpdateView)
+	router.DELETE("images", apiuse.ImageDelete)
+	router.PUT("images", apiuse.ImageUpdate)
 
 }

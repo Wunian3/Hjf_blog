@@ -12,7 +12,7 @@ type ImageUpdateRequest struct {
 	ID   uint   `json:"id" binding:"required" msg:"请选择文件id"`
 }
 
-func (ApiImage) ImageUpdateView(c *gin.Context) {
+func (ApiImage) ImageUpdate(c *gin.Context) {
 	var cr ImageUpdateRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {

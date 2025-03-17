@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// AdvertListView 广告列表
+// AdvertList 广告列表
 // @Tags 广告管理
 // @Summary 广告列表
 // @Description 广告列表
@@ -16,7 +16,7 @@ import (
 // @Router /api/adts [get]
 // @Produce json
 // @Success 200 {object} res.Response{data=res.ListRes[models.AdtModel]}
-func (ApiAdvert) AdvertListView(c *gin.Context) {
+func (ApiAdvert) AdvertList(c *gin.Context) {
 	var cr models.PageInf
 	if err := c.ShouldBindQuery(&cr); err != nil {
 		res.FailWithCode(res.ArgumentError, c)

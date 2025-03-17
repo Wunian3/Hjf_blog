@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// AdvertUpdateView 广告编辑
+// AdvertUpdate 广告编辑
 // @Tags 广告管理
 // @Summary 广告编辑
 // @Description 广告编辑
@@ -16,7 +16,7 @@ import (
 // @Router /api/adts/:id [put]
 // @Produce json
 // @Success 200 {object} res.Response{data=string}
-func (ApiAdvert) AdvertUpdateView(c *gin.Context) {
+func (ApiAdvert) AdvertUpdate(c *gin.Context) {
 
 	id := c.Param("id")
 	var cr AdvertRequest

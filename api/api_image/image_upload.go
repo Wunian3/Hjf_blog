@@ -31,7 +31,7 @@ type FileUploadResponse struct {
 }
 
 // 带图片url返回的图片上传机制
-func (ApiImage) ImageUploadView(c *gin.Context) {
+func (ApiImage) ImageUpload(c *gin.Context) {
 	// 上传多个图片
 	form, err := c.MultipartForm()
 	if err != nil {

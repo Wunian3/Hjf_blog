@@ -15,7 +15,7 @@ type AdvertRequest struct {
 	//binding:"required" msg:"请选择是否展示"
 }
 
-// AdvertCreateView 添加广告
+// AdvertCreate 添加广告
 // @Tags 广告管理
 // @Summary 广告添加
 // @Description 广告添加
@@ -23,7 +23,7 @@ type AdvertRequest struct {
 // @Router /api/adts [post]
 // @Produce json
 // @Success 200 {object} res.Response{}
-func (ApiAdvert) AdvertCreateView(c *gin.Context) {
+func (ApiAdvert) AdvertCreate(c *gin.Context) {
 	var cr AdvertRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {

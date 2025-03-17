@@ -11,7 +11,7 @@ type SettingsUri struct {
 }
 
 // 不太适合生成文档的类型，有点小缺陷，主要是把多个接口浓缩了，接口的入参和出参不统一
-func (ApiSettings) SettingsInfoView(c *gin.Context) {
+func (ApiSettings) SettingsInfo(c *gin.Context) {
 	c.JSON(200, gin.H{"msg": "hjfapi启动"})
 	var cr SettingsUri
 	err := c.ShouldBindUri(&cr)
