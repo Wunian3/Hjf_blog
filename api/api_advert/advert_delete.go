@@ -9,7 +9,7 @@ import (
 )
 
 // AdvertDeleteView 广告删除
-// @Tags 广告删除
+// @Tags 广告管理
 // @Summary 广告删除
 // @Description 广告删除
 // @Param data body models.RemoveRequest   true  "表示多个参数"

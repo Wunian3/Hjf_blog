@@ -9,7 +9,7 @@ import (
 )
 
 // AdvertListView 广告列表
-// @Tags 广告列表
+// @Tags 广告管理
 // @Summary 广告列表
 // @Description 广告列表
 // @Param data query models.PageInf   false  "id列表"

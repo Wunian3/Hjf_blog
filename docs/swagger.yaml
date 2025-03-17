@@ -16,6 +16,23 @@ definitions:
     - images
     - title
     type: object
+  api_image.ImageRes:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      path:
+        type: string
+    type: object
+  ctype.ImageType:
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - Local
+    - QiNiu
   models.AdtModel:
     properties:
       createdAt:
@@ -34,6 +51,24 @@ definitions:
         description: 标题
         type: string
     type: object
+  models.BannerModel:
+    properties:
+      createdAt:
+        type: string
+      hash:
+        description: 判断重复图片
+        type: string
+      id:
+        type: integer
+      image_type:
+        allOf:
+        - $ref: '#/definitions/ctype.ImageType'
+        description: 图片的类型
+      name:
+        type: string
+      path:
+        type: string
+    type: object
   models.RemoveRequest:
     properties:
       id_list:
@@ -47,6 +82,13 @@ definitions:
         type: integer
       list:
         $ref: '#/definitions/models.AdtModel'
+    type: object
+  res.ListRes-models_BannerModel:
+    properties:
+      count:
+        type: integer
+      list:
+        $ref: '#/definitions/models.BannerModel'
     type: object
   res.Response:
     properties:
@@ -87,7 +129,7 @@ paths:
               type: object
       summary: 广告删除
       tags:
-      - 广告删除
+      - 广告管理
     get:
       description: 广告列表
       parameters:
@@ -117,7 +159,7 @@ paths:
               type: object
       summary: 广告列表
       tags:
-      - 广告列表
+      - 广告管理
     post:
       description: 广告添加
       parameters:
@@ -161,5 +203,56 @@ paths:
               type: object
       summary: 广告编辑
       tags:
-      - 广告编辑
+      - 广告管理
+  /api/image_name:
+    get:
+      description: 图片名称列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/api_image.ImageRes'
+                  type: array
+              type: object
+      summary: 图片名称列表
+      tags:
+      - 图片管理
+  /api/images:
+    get:
+      description: 图片列表
+      parameters:
+      - in: query
+        name: key
+        type: string
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/res.ListRes-models_BannerModel'
+              type: object
+      summary: 图片列表
+      tags:
+      - 图片管理
 swagger: "2.0"

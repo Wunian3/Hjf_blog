@@ -9,7 +9,7 @@ import (
 )
 
 // AdvertUpdateView 广告编辑
-// @Tags 广告编辑
+// @Tags 广告管理
 // @Summary 广告编辑
 // @Description 广告编辑
 // @Param data body AdvertRequest   true  "广告参数"

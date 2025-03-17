@@ -3,9 +3,11 @@ package router
 import "blog_server/api"
 
 func (router RouterGroup) RouterImages() {
-	img := api.ApiGroupApp.ApiImages
-	router.POST("images", img.ImageUploadView)
-	router.GET("images", img.ImageListView)
-	router.DELETE("images", img.ImageDeleteView)
-	router.PUT("images", img.ImageUpdateView)
+	apiuse := api.ApiGroupApp.ApiImages
+	router.POST("images", apiuse.ImageUploadView)
+	router.GET("images", apiuse.ImageListView)
+	router.GET("image_name", apiuse.ImagNameList)
+	router.DELETE("images", apiuse.ImageDeleteView)
+	router.PUT("images", apiuse.ImageUpdateView)
+
 }

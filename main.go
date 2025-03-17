@@ -11,9 +11,9 @@ import (
 )
 
 // 配置
-// @title blog_server API文档
+// @title HJF_BLOG_SERVER API文档
 // @version 1.0
-// @description blog_server API文档
+// @description hjf_blog_server API文档
 // @host 127.0.0.01:8080
 // @BasePath /
 func main() {
