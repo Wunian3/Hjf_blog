@@ -14,7 +14,7 @@ type UserRole struct {
 	UserID   uint       `json:"user_id" binding:"required" msg:"用户id错误"`
 }
 
-// UserUpdateRoleView 用户权限变更
+// UserRoleUpdate 用户权限变更
 func (ApiUser) UserRoleUpdate(c *gin.Context) {
 	var cr UserRole
 	if err := c.ShouldBindJSON(&cr); err != nil {

@@ -6,8 +6,6 @@ import (
 	"blog_server/flag"
 	"blog_server/global"
 	"blog_server/router"
-	//"flag"
-	"fmt"
 )
 
 // 配置
@@ -21,7 +19,9 @@ func main() {
 	global.Log = core.InitLog()
 	//connect hblog_db
 	global.DB = core.InitGorm()
-	fmt.Println(global.DB)
+	//redis初始化
+	global.Redis = core.ConnectRedis()
+	//fmt.Println(global.DB)
 	option := flag.Parse()
 	//fmt.Println(option)
 	if flag.IsWebStop(option) {

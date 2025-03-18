@@ -51,3 +51,8 @@ qi_niu:
   zone: xx
   size: 5
   prefix: "hjfBlog"
+redis:
+  ip: "127.0.0.1"
+  port: 6379
+  password: "redis"
+  pool_size: 100

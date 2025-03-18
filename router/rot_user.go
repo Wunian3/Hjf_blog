@@ -11,7 +11,7 @@ func (router RouterGroup) RouterUser() {
 	router.GET("users", middle.JwtAuth(), apiuse.UserList)
 	router.PUT("users_role", middle.JwtAdmin(), apiuse.UserRoleUpdate)
 	router.PUT("users_password", middle.JwtAuth(), apiuse.UserPasswordUpdate)
-	//router.GET("images_name", apiuse.ImagNameList)
+	router.POST("users_logout", middle.JwtAuth(), apiuse.UserLogout)
 	//router.DELETE("images", apiuse.ImageDelete)
 	//router.PUT("images", apiuse.ImageUpdate)
 
