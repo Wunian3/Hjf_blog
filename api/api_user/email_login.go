@@ -10,7 +10,7 @@ import (
 )
 
 type EmailLoginRequest struct {
-	UserName string `json:" " binding:"required" msg:"请输入用户名"`
+	UserName string `json:"user_name" binding:"required" msg:"请输入用户名"`
 	Password string `json:"password" binding:"required" msg:"请输入密码"`
 }
 
