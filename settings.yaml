@@ -35,13 +35,13 @@ qq:
   key: xx
   redirect: http://xx.xx.com/login?flag=qq
 email:
-  host: stmp.qq.com
+  host: smtp.qq.com
   port: 465
-  user: xxx@qq.com
-  password: xxx
+  user: hwunian@qq.com
+  password: "tvanyopklydgghgg"
   default_from_email: hjfBlog
-  use-ssl: xx
-  user-tls: xx
+  use-ssl: true
+  user-tls: false
 qi_niu:
   enable: false
   access_key: w0_GVYiOBUeSpg4pGbsHGBTa9geB1WWJqUXzjj2z
@@ -52,7 +52,7 @@ qi_niu:
   size: 5
   prefix: "hjfBlog"
 redis:
-  ip: "127.0.0.1"
+  ip: 127.0.0.1
   port: 6379
   password: "redis"
   pool_size: 100
