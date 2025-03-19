@@ -39,15 +39,15 @@ func OkWithData(data any, c *gin.Context) {
 }
 func OkWithList(List any, count int64, c *gin.Context) {
 	OkWithData(ListRes[any]{
-		Count: count,
 		List:  List,
+		Count: count,
 	}, c)
 }
 func OkWithMessage(msg string, c *gin.Context) {
 	Result(Success, map[string]any{}, msg, c)
 }
 func OkWith(c *gin.Context) {
-	Result(Success, map[string]any{}, "成功啦，hjfblogwin", c)
+	Result(Success, map[string]any{}, "HJF SUCCESS", c)
 }
 func Fail(data any, msg string, c *gin.Context) {
 	Result(Error, data, msg, c)

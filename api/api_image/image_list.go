@@ -25,7 +25,7 @@ func (ApiImage) ImageList(c *gin.Context) {
 
 	list, count, err := common.ComList(models.BannerModel{}, common.Option{
 		PageInf: cr,
-		Debug:   false,
+		Debug:   true,
 	})
 
 	res.OkWithList(list, count, c)

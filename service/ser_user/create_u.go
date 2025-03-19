@@ -8,6 +8,7 @@ import (
 	"errors"
 )
 
+// 用户添加后台服务
 const Avatar = "/uploads/avatar/default.png"
 
 func (ServiceUser) CreateUser(userName, nickName, password string, role ctype.Role, email string, ip string) error {

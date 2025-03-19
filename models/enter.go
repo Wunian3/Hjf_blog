@@ -8,10 +8,10 @@ type MODEL struct {
 	CreatedAt time.Time `json:"createdAt" structs:"-"`
 }
 type PageInf struct {
-	Page  int    `json:"page"`
-	Limit int    `json:"limit"`
-	Key   string `json:"key"`
-	Sort  string `json:"sort"`
+	Page  int    `form:"page"`
+	Limit int    `form:"limit"`
+	Key   string `form:"key"`
+	Sort  string `form:"sort"`
 }
 type RemoveRequest struct {
 	IDList []uint `json:"id_list"`

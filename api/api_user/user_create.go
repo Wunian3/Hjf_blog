@@ -9,13 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 用户前台服务
 type UserCreateRequest struct {
 	NickName string     `json:"nick_name" binding:"required" msg:"请输入昵称"`
 	UserName string     `json:"user_name" binding:"required" msg:"请输入用户名"`
 	Password string     `json:"password" binding:"required" msg:"请输入密码"`
-	Role     ctype.Role `json:"role" binding:"required" msg:"请选择权限"` // 权限 1管理员2普通用户3游客
+	Role     ctype.Role `json:"role" binding:"required" msg:"请选择权限"` // 1管理员2普通用户3游客
 }
 
+// 用户前台服务
 func (ApiUser) UserCreate(c *gin.Context) {
 	var cr UserCreateRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
