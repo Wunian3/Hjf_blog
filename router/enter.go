@@ -1,6 +1,7 @@
 package router
 
 import (
+	"blog_server/api/api_user"
 	"blog_server/global"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -15,6 +16,7 @@ func InitRouter() *gin.Engine {
 	gin.SetMode(global.Config.System.Env)
 	router := gin.Default()
 	router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
+	router.GET("login", api_user.ApiUser{}.QQLogin)
 	apiRouterGroup := router.Group("api")
 	routerGroupApp := RouterGroup{apiRouterGroup}
 	routerGroupApp.RouterSettings()
