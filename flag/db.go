@@ -13,7 +13,7 @@ func Makemigrations() {
 		AutoMigrate(
 			&models.BannerModel{},
 			&models.TagModel{},
-			&models.MessModel{},
+			&models.MsgModel{},
 			&models.AdtModel{},
 			&models.UserModel{},
 			&models.CommentModel{},
