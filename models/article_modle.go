@@ -1,6 +1,7 @@
 package models
 
 import (
+	"blog_server/global"
 	"blog_server/models/ctype"
 	"context"
 	"github.com/olivere/elastic/v7"

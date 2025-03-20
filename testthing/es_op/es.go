@@ -11,13 +11,11 @@ import (
 
 var client *elastic.Client
 
-func init() {
-	core.IninCf()
-	core.InitLog()
+func EsConnect() *elastic.Client {
 	var err error
 	sniffOpt := elastic.SetSniff(false)
 	host := "http://127.0.0.1:9200"
-	client, err = elastic.NewClient(
+	c, err := elastic.NewClient(
 		elastic.SetURL(host),
 		sniffOpt,
 		elastic.SetBasicAuth("", ""),
@@ -25,6 +23,12 @@ func init() {
 	if err != nil {
 		logrus.Fatalf("es连接失败 %s", err.Error())
 	}
+	return c
+}
+func init() {
+	core.IninCf()
+	core.InitLog()
+	client = EsConnect()
 }
 
 type DemoModel struct {

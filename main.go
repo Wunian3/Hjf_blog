@@ -19,8 +19,7 @@ func main() {
 	global.Log = core.InitLog()
 	//connect hblog_db
 	global.DB = core.InitGorm()
-	//redis初始化
-	global.Redis = core.ConnectRedis()
+
 	//fmt.Println(global.DB)
 	option := flag.Parse()
 	//fmt.Println(option)
@@ -28,6 +27,12 @@ func main() {
 		flag.SwitchOption(option)
 		return
 	}
+
+	//redis初始化
+	global.Redis = core.ConnectRedis()
+	//es_connect
+	global.ESClient = core.EsConnect()
+
 	router := router.InitRouter()
 	addr := global.Config.System.Addr()
 	global.Log.Infof("%s ,hjfblog启动！", addr)
