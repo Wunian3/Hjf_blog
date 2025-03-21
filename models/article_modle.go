@@ -13,9 +13,10 @@ type ArticleModel struct {
 	UpdatedAt string `json:"updated_at" `
 	CreatedAt string `json:"created_at" `
 
-	Title    string `json:"title"`    // 文章标题
-	Abstract string `json:"abstract"` // 文章简介
-	Content  string `json:"content"`  // 文章内容
+	Title    string `json:"title"`              // 文章标题
+	Keyword  string `json:"keyword,omit(list)"` // 关键字
+	Abstract string `json:"abstract"`           // 文章简介
+	Content  string `json:"content,omit(list)"` // 文章内容
 
 	LookCount     int `json:"look_count"`     // 浏览量
 	CommentCount  int `json:"comment_count"`  // 评论量
@@ -26,9 +27,9 @@ type ArticleModel struct {
 	UserNickName string `json:"user_nick_name"` // 文章名称
 	UserAvatar   string `json:"user_avatar"`    //用户头像
 
-	Category string `json:"category"` // 文章分类
-	Source   string `json:"source"`   // 文章来源
-	Link     string `json:"link"`     // 原文链接
+	Category string `json:"category"`          // 文章分类
+	Source   string `json:"source,omit(list)"` // 文章来源
+	Link     string `json:"link,omit(list)"`   // 原文链接
 
 	BannerUrl string `json:"banner_url"` // 文章封面
 	BannerID  uint   `json:"banner_id"`  // 文章封面id
