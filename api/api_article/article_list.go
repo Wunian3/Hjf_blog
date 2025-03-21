@@ -21,6 +21,12 @@ func (ApiArticle) ArticleList(c *gin.Context) {
 		res.OkWithMessage("查询失败", c)
 		return
 	}
-
-	res.OkWithList(filter.Omit("list", list), int64(count), c)
+	data := filter.Omit("list", list)
+	_list, _ := data.(filter.Filter)
+	if string(_list.MustMarshalJSON()) == "{}" {
+		list = make([]models.ArticleModel, 0)
+		res.OkWithList(list, int64(count), c)
+		return
+	}
+	res.OkWithList(data, int64(count), c)
 }
