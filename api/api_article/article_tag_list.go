@@ -91,6 +91,7 @@ func (ApiArticle) ArticleTagList(c *gin.Context) {
 		})
 		tagStringList = append(tagStringList, bucket.Key)
 	}
+
 	var tagModelList []models.TagModel
 	global.DB.Find(&tagModelList, "title in ?", tagStringList)
 	var tagDate = map[string]string{}

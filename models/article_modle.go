@@ -48,12 +48,29 @@ func (ArticleModel) Mapping() string {
   "settings": {
     "index":{
       "max_result_window": "100000"
+    },
+	"analysis": {
+      "analyzer": {
+        "ngram_analyzer": {
+          "type": "custom",
+          "tokenizer": "ngram_tokenizer",
+          "filter": ["lowercase"]
+        }
+      },
+      "tokenizer": {
+        "ngram_tokenizer": {
+          "type": "ngram",
+          "min_ngram": 2,
+          "max_ngram": 5
+        }
+      }
     }
   }, 
   "mappings": {
     "properties": {
       "title": { 
-        "type": "text"
+        "type": "text",
+		"analyzer": "ngram_analyzer"
       },
       "keyword": { 
         "type": "keyword"
