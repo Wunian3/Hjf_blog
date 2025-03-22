@@ -13,6 +13,7 @@ func (router RouterGroup) RouterUser() {
 	apiuse := api.ApiGroupApp.ApiUser
 	router.Use(sessions.Sessions("sessionid", store))
 	router.POST("email_login", apiuse.EmailLogin)
+	router.POST("users", apiuse.UserCreate)
 	router.POST("login", apiuse.QQLogin)
 	router.GET("users", middle.JwtAuth(), apiuse.UserList)
 	router.PUT("users_role", middle.JwtAdmin(), apiuse.UserRoleUpdate)

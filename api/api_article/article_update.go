@@ -5,10 +5,9 @@ import (
 	"blog_server/models"
 	"blog_server/models/ctype"
 	"blog_server/models/res"
-	"context"
+	"blog_server/service/ser_es"
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -89,17 +88,12 @@ func (ApiArticle) ArticleUpdate(c *gin.Context) {
 		}
 		DataMap[key] = v
 	}
-
-	_, err = global.ESClient.
-		Update().
-		Index(models.ArticleModel{}.Index()).
-		Id(cr.ID).
-		Doc(DataMap).
-		Do(context.Background())
+	err = ser_es.ArticleUp(cr.ID, maps)
 	if err != nil {
-		logrus.Error(err.Error())
-		res.FailWithMessage("更新失败", c)
+		global.Log.Error(err)
+		res.FailWithMessage("文章更新失败", c)
 		return
 	}
+
 	res.OkWithMessage("更新成功", c)
 }

@@ -14,6 +14,9 @@ func (router RouterGroup) RouterArticle() {
 	router.GET("articles/tags", apiuse.ArticleTagList)
 	router.PUT("articles", apiuse.ArticleUpdate)
 	router.DELETE("articles", apiuse.ArticleDelete)
+	router.POST("articles/collects", middle.JwtAuth(), apiuse.ArticleCollectOP)
+	router.GET("articles/collects", middle.JwtAuth(), apiuse.ArticleCollList)
+	router.DELETE("articles/collects", middle.JwtAuth(), apiuse.ArticleCollectRemoveBatch)
 	router.GET("articles/:id", apiuse.ArticleDetail)
 
 }

@@ -3,6 +3,7 @@ package ser_es
 import (
 	"blog_server/global"
 	"blog_server/models"
+	"blog_server/service/ser_redis"
 	"context"
 	"encoding/json"
 	"errors"
@@ -83,6 +84,10 @@ func CommList(option Option) (list []models.ArticleModel, count int, err error) 
 	//}
 	count = int(res.Hits.TotalHits.Value) //搜索到结果总条数
 	demoList := []models.ArticleModel{}
+
+	digginf := ser_redis.GetDiggInf()
+	lookinf := ser_redis.GetLookInf()
+
 	for _, hit := range res.Hits.Hits {
 		var model models.ArticleModel
 		data, err := hit.Source.MarshalJSON()
@@ -101,7 +106,14 @@ func CommList(option Option) (list []models.ArticleModel, count int, err error) 
 		}
 
 		model.ID = hit.Id
+		digg := digginf[hit.Id]
+		look := lookinf[hit.Id]
+
+		model.DiggCount = model.DiggCount + digg
+		model.LookCount = model.LookCount + look
+
 		demoList = append(demoList, model)
+
 	}
 	return demoList, count, err
 }
@@ -119,8 +131,10 @@ func CommDetail(id string) (model models.ArticleModel, err error) {
 		return
 	}
 	model.ID = res.Id
+	model.LookCount = model.LookCount + ser_redis.GetLook(res.Id)
 	return
 }
+
 func CommDetailByKeyword(key string) (model models.ArticleModel, err error) {
 	res, err := global.ESClient.Search().
 		Index(models.ArticleModel{}.Index()).
@@ -141,4 +155,14 @@ func CommDetailByKeyword(key string) (model models.ArticleModel, err error) {
 	}
 	model.ID = hit.Id
 	return
+}
+
+func ArticleUp(id string, data map[string]any) error {
+	_, err := global.ESClient.
+		Update().
+		Index(models.ArticleModel{}.Index()).
+		Id(id).
+		Doc(data).
+		Do(context.Background())
+	return err
 }

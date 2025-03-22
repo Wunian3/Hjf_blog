@@ -1,22 +1,21 @@
 package api_article
 
 import (
+	"blog_server/models"
 	"blog_server/models/res"
 	"blog_server/service/ser_es"
+	"blog_server/service/ser_redis"
 	"github.com/gin-gonic/gin"
 )
 
-type ESIDRequest struct {
-	ID string `json:"id" form:"id" uri:"id"`
-}
-
 func (ApiArticle) ArticleDetail(c *gin.Context) {
-	var cr ESIDRequest
+	var cr models.ESIDRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
 		res.FailWithCode(res.ArgumentError, c)
 		return
 	}
+	ser_redis.Look(cr.ID)
 	model, err := ser_es.CommDetail(cr.ID)
 	if err != nil {
 		res.FailWithMessage(err.Error(), c)
