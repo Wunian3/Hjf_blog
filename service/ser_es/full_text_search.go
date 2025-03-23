@@ -12,11 +12,13 @@ import (
 )
 
 type SearchData struct {
+	Key   string `json:"key"`
 	Body  string `json:"body"`  // 正文
 	Slug  string `json:"slug"`  // 包含文章的id 的跳转地址
 	Title string `json:"title"` // 标题
 }
 
+// 同步文章数据到全文搜索
 func AsyncArticleByFullText(id, title, content string) {
 	indexList := GetSearchIndexDataByContent(id, title, content)
 
@@ -32,6 +34,17 @@ func AsyncArticleByFullText(id, title, content string) {
 
 	}
 	logrus.Infof("%s 添加成功，共 %d 条", title, len(result.Succeeded()))
+}
+
+// 删除文章数据
+func DeleteFullTextByArticleID(id string) {
+	boolSearch := elastic.NewTermQuery("key", id)
+	res, _ := global.ESClient.
+		DeleteByQuery().
+		Index(models.FullTextModel{}.Index()).
+		Query(boolSearch).
+		Do(context.Background())
+	logrus.Infof("成功删除 %d 条记录", res.Deleted)
 }
 
 func GetSearchIndexDataByContent(id, title, content string) (searchDataList []SearchData) {
@@ -63,6 +76,7 @@ func GetSearchIndexDataByContent(id, title, content string) (searchDataList []Se
 			Title: headList[i],
 			Body:  bodyList[i],
 			Slug:  id + getSlug(headList[i]),
+			Key:   id,
 		})
 	}
 	return searchDataList

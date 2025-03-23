@@ -6,6 +6,7 @@ import (
 	"blog_server/models/ctype"
 	"blog_server/models/res"
 	"blog_server/service/ser_es"
+	"fmt"
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
 	"time"
@@ -53,16 +54,10 @@ func (ApiArticle) ArticleUpdate(c *gin.Context) {
 		BannerUrl: bannerUrl,
 		Tags:      cr.Tags,
 	}
-	//过滤空值
-	err = article.GetDataByID(cr.ID)
-	if err != nil {
-		global.Log.Error(err)
-		res.FailWithMessage("文章不存在", c)
-		return
-	}
 
 	maps := structs.Map(&article)
 	var DataMap = map[string]any{}
+
 	for key, v := range maps {
 		switch val := v.(type) {
 		case string:
@@ -88,12 +83,26 @@ func (ApiArticle) ArticleUpdate(c *gin.Context) {
 		}
 		DataMap[key] = v
 	}
-	err = ser_es.ArticleUp(cr.ID, maps)
+	//fmt.Println("DataMap:", DataMap)
+	////过滤空值
+	err = article.GetDataByID(cr.ID)
+	if err != nil {
+		global.Log.Error(err)
+		res.FailWithMessage("文章不存在", c)
+		return
+	}
+	err = ser_es.ArticleUp(cr.ID, DataMap)
+	fmt.Println(DataMap)
 	if err != nil {
 		global.Log.Error(err)
 		res.FailWithMessage("文章更新失败", c)
 		return
 	}
-
+	//更新成功，同步数据到全文搜索
+	newArticle, _ := ser_es.CommDetail(cr.ID)
+	if article.Content != newArticle.Content && article.Title != newArticle.Title {
+		ser_es.DeleteFullTextByArticleID(cr.ID)
+		ser_es.AsyncArticleByFullText(cr.ID, article.Title, newArticle.Content)
+	}
 	res.OkWithMessage("更新成功", c)
 }
