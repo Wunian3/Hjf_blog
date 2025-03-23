@@ -15,9 +15,11 @@ func main() {
 
 	global.Redis = core.ConnectRedis()
 	global.ESClient = core.EsConnect()
+	digg := ser_redis.NewDigg()
+	digg.Set("grtRuZUBmwGUChGr7ByC")
+	//ser_redis.Digg("grtRuZUBmwGUChGr7ByC")
+	fmt.Println(digg.Get("grtRuZUBmwGUChGr7ByC"))
 
-	ser_redis.Digg("grtRuZUBmwGUChGr7ByC")
-	fmt.Println(ser_redis.GetDigg("grtRuZUBmwGUChGr7ByC"))
-	fmt.Println(ser_redis.GetDiggInf())
+	fmt.Println(digg.GetInfo())
 	//ser_redis.DiggClear()
 }

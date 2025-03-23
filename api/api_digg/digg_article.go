@@ -15,6 +15,7 @@ func (ApiDigg) DiggArticle(c *gin.Context) {
 		return
 	}
 	// todo: 对长度校验的难度，后期修补
-	ser_redis.Digg(cr.ID)
+	ser_redis.NewDigg().Set(cr.ID)
+	//ser_redis.Digg(cr.ID)
 	res.OkWithMessage("文章点赞成功", c)
 }

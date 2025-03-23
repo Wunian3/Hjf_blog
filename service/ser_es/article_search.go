@@ -69,8 +69,9 @@ func CommList(option Option) (list []models.ArticleModel, count int, err error) 
 	count = int(res.Hits.TotalHits.Value) //搜索到结果总条数
 	demoList := []models.ArticleModel{}
 
-	digginf := ser_redis.GetDiggInf()
-	lookinf := ser_redis.GetLookInf()
+	digginf := ser_redis.NewDigg().GetInfo()
+	lookinf := ser_redis.NewArticleLook().GetInfo()
+	commentinf := ser_redis.NewCommentCount().GetInfo()
 
 	for _, hit := range res.Hits.Hits {
 		var model models.ArticleModel
@@ -92,9 +93,11 @@ func CommList(option Option) (list []models.ArticleModel, count int, err error) 
 		model.ID = hit.Id
 		digg := digginf[hit.Id]
 		look := lookinf[hit.Id]
+		comment := commentinf[hit.Id]
 
 		model.DiggCount = model.DiggCount + digg
 		model.LookCount = model.LookCount + look
+		model.CommentCount = model.CommentCount + comment
 
 		demoList = append(demoList, model)
 
@@ -115,7 +118,7 @@ func CommDetail(id string) (model models.ArticleModel, err error) {
 		return
 	}
 	model.ID = res.Id
-	model.LookCount = model.LookCount + ser_redis.GetLook(res.Id)
+	model.LookCount = model.LookCount + ser_redis.NewArticleLook().Get(res.Id)
 	return
 }
 

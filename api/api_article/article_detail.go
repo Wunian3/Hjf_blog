@@ -15,7 +15,7 @@ func (ApiArticle) ArticleDetail(c *gin.Context) {
 		res.FailWithCode(res.ArgumentError, c)
 		return
 	}
-	ser_redis.Look(cr.ID)
+	ser_redis.NewArticleLook().Set(cr.ID)
 	model, err := ser_es.CommDetail(cr.ID)
 	if err != nil {
 		res.FailWithMessage(err.Error(), c)

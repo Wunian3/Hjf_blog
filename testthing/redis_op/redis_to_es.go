@@ -28,8 +28,8 @@ func main() {
 		logrus.Error(err)
 		return
 	}
-	diggInf := ser_redis.GetDiggInf()
-	lookInf := ser_redis.GetLookInf()
+	diggInf := ser_redis.NewDigg().GetInfo()
+	lookInf := ser_redis.NewArticleLook().GetInfo()
 	for _, hit := range result.Hits.Hits {
 		var article models.ArticleModel
 		err = json.Unmarshal(hit.Source, &article)
@@ -56,7 +56,7 @@ func main() {
 		}
 		logrus.Infof("%s,点赞数据同步成功， 点赞数 %d 浏览数 %d", article.Title, newDigg, newLook)
 	}
-	ser_redis.DiggClear()
-	ser_redis.LookClear()
+	ser_redis.NewDigg().Clear()
+	ser_redis.NewArticleLook().Clear()
 
 }
