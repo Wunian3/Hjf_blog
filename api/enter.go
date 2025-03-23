@@ -8,6 +8,7 @@ import (
 	"blog_server/api/api_image"
 	"blog_server/api/api_menu"
 	"blog_server/api/api_msg"
+	"blog_server/api/api_new"
 	"blog_server/api/api_settings"
 	"blog_server/api/api_tag"
 	"blog_server/api/api_user"
@@ -24,6 +25,7 @@ type ApiGroup struct {
 	ApiArticle  api_article.ApiArticle
 	ApiDigg     api_digg.ApiDigg
 	ApiComment  api_comment.ApiComment
+	ApiNew      api_new.ApiNew
 }
 
 var ApiGroupApp = new(ApiGroup)

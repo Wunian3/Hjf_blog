@@ -3,9 +3,9 @@ package models
 import "time"
 
 type MODEL struct {
-	ID        uint      `gorm:"primary_key" json:"id"  structs:"-"`
+	ID        uint      `gorm:"primary_key" json:"id,select($any)"  structs:"-"`
 	UpdatedAt time.Time `json:"-" structs:"-"`
-	CreatedAt time.Time `json:"created_at" structs:"-"`
+	CreatedAt time.Time `json:"created_at,select($any)" structs:"-"`
 }
 type PageInf struct {
 	Page  int    `form:"page"`
