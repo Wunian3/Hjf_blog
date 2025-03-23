@@ -10,10 +10,13 @@ import (
 const newsIndex = "news_index"
 
 type NewData struct {
-	Index    string `json:"index"`
-	Title    string `json:"title"`
-	HotValue string `json:"hotValue"`
-	Link     string `json:"link"`
+	Index int    `json:"index"`
+	Title string `json:"title"`
+	//HotValue string `json:"hotValue"`
+	//Link     string `json:"link"`  //old v0.1
+	Hot       string `json:"hot"`
+	URL       string `json:"url"`
+	MobileURL string `json:"mobil_url"`
 }
 
 // SetNews 设置某一个数据，重复执行，重复累加
