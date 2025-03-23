@@ -5,16 +5,18 @@ import (
 	"blog_server/service/ser_redis"
 	"blog_server/utils/requests"
 	"encoding/json"
+	"fmt"
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
 	"io"
+	"strconv"
 	"time"
 )
 
-type params struct {
-	ID   string `json:"id"`
-	Size int    `json:"size"`
-}
+//type params struct {
+//	ID   string `json:"id"`
+//	Size int    `json:"size"`
+//}  //old v0.1
 
 type header struct {
 	Signaturekey string `form:"signaturekey" structs:"signaturekey"`
@@ -38,7 +40,65 @@ type OutputResponse struct {
 const newAPI = "https://api.vvhan.com/api/hotlist/baiduRD"
 const timeout = 2 * time.Minute
 
-// old v0.1
+func (ApiNew) NewList(c *gin.Context) {
+	var headers header
+	err := c.ShouldBindHeader(&headers)
+	if err != nil {
+		res.FailWithCode(res.ArgumentError, c)
+		return
+	}
+
+	// 从查询参数中获取 size
+	sizeStr := c.Query("size")
+	size, err := strconv.Atoi(sizeStr)
+	if err != nil || size <= 0 {
+		size = 10 // 默认返回 10 条数据
+	}
+
+	// 生成缓存键，包含 size
+	key := fmt.Sprintf("baidu-hotlist-%d", size)
+	newsData, _ := ser_redis.GetNews(key)
+	if len(newsData) != 0 {
+		res.OkWithData(newsData, c)
+		return
+	}
+
+	// 发送 GET 请求获取所有数据
+	httpResponse, err := requests.Get(newAPI, structs.Map(headers), timeout)
+	if err != nil {
+		res.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	var response NewResponse
+	byteData, err := io.ReadAll(httpResponse.Body)
+	if err != nil {
+		res.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = json.Unmarshal(byteData, &response)
+	if err != nil {
+		res.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	if !response.Success {
+		res.FailWithMessage(response.Message, c)
+		return
+	}
+
+	// 截取前 size 条数据
+	limitedData := response.Data
+	if size < len(response.Data) {
+		limitedData = response.Data[:size]
+	}
+
+	res.OkWithData(limitedData, c)
+	ser_redis.SetNews(key, limitedData)
+	return
+}
+
+// todo :old v0.1微博api
 //
 //	func (ApiNew) NewList(c *gin.Context) {
 //		var cr params
@@ -81,43 +141,3 @@ const timeout = 2 * time.Minute
 //		ser_redis.SetNews(key, response.Data)
 //		return
 //	}
-func (ApiNew) NewList(c *gin.Context) {
-	var headers header
-	err := c.ShouldBindHeader(&headers)
-	if err != nil {
-		res.FailWithCode(res.ArgumentError, c)
-		return
-	}
-	key := "baidu-hotlist"
-	newsData, _ := ser_redis.GetNews(key)
-	if len(newsData) != 0 {
-		res.OkWithData(newsData, c)
-		return
-	}
-
-	httpResponse, err := requests.Get(newAPI, structs.Map(headers), timeout)
-	if err != nil {
-		res.FailWithMessage(err.Error(), c)
-		return
-	}
-
-	var response NewResponse
-	byteData, err := io.ReadAll(httpResponse.Body)
-	if err != nil {
-		res.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = json.Unmarshal(byteData, &response)
-	if err != nil {
-		res.FailWithMessage(err.Error(), c)
-		return
-	}
-
-	if !response.Success {
-		res.FailWithMessage(response.Message, c)
-		return
-	}
-	res.OkWithData(response.Data, c)
-	ser_redis.SetNews(key, response.Data)
-	return
-}
