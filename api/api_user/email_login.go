@@ -3,8 +3,10 @@ package api_user
 import (
 	"blog_server/global"
 	"blog_server/models"
+	"blog_server/models/ctype"
 	"blog_server/models/res"
 	"blog_server/plugin/log_stash"
+	"blog_server/utils"
 	"blog_server/utils/jwts"
 	"blog_server/utils/pwd"
 	"fmt"
@@ -55,8 +57,18 @@ func (ApiUser) EmailLogin(c *gin.Context) {
 
 		return
 	}
+	ip, addr := utils.GetAddrByGin(c)
 	log = log_stash.New(c.ClientIP(), token)
 	log.Info("登录成功")
+	global.DB.Create(&models.LogDataMd{
+		UserID:    userModel.ID,
+		IP:        ip,
+		NickName:  userModel.NickName,
+		Token:     token,
+		Device:    "",
+		Addr:      addr,
+		LoginType: ctype.SignEmail,
+	})
 
 	res.OkWithData(token, c)
 

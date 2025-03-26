@@ -4,6 +4,7 @@ import (
 	"blog_server/global"
 	"blog_server/models"
 	"blog_server/models/ctype"
+	"blog_server/utils"
 	"blog_server/utils/pwd"
 	"errors"
 )
@@ -19,6 +20,8 @@ func (ServiceUser) CreateUser(userName, nickName, password string, role ctype.Ro
 		return errors.New("用户名已存在")
 	}
 	hashPwd := pwd.HashPwd(password)
+
+	addr := utils.GetAddr(ip)
 	err = global.DB.Create(&models.UserModel{
 		NickName:   nickName,
 		UserName:   userName,
@@ -27,7 +30,7 @@ func (ServiceUser) CreateUser(userName, nickName, password string, role ctype.Ro
 		Role:       role,
 		Avatar:     Avatar,
 		IP:         ip,
-		Addr:       "内网地址",
+		Addr:       addr,
 		SignStatus: ctype.SignEmail,
 	}).Error
 	if err != nil {

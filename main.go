@@ -6,6 +6,8 @@ import (
 	"blog_server/flag"
 	"blog_server/global"
 	"blog_server/router"
+	"blog_server/service/ser_cron"
+	"blog_server/utils"
 )
 
 // 配置
@@ -19,7 +21,8 @@ func main() {
 	global.Log = core.InitLog()
 	//connect hblog_db
 	global.DB = core.InitGorm()
-
+	core.InitAddrDB()
+	defer global.AddrDB.Close()
 	//fmt.Println(global.DB)
 	option := flag.Parse()
 	//fmt.Println(option)
@@ -33,9 +36,14 @@ func main() {
 	//es_connect
 	global.ESClient = core.EsConnect()
 
+	ser_cron.CronInit()
+
 	router := router.InitRouter()
+
 	addr := global.Config.System.Addr()
-	global.Log.Infof("%s ,hjfblog启动！", addr)
+
+	utils.PrintSystem()
+
 	err := router.Run(addr)
 	if err != nil {
 		global.Log.Fatalf(err.Error())

@@ -24,7 +24,10 @@ func (ApiUser) UserCreate(c *gin.Context) {
 		res.FailWithError(err, &cr, c)
 		return
 	}
-	err := ser_user.ServiceUser{}.CreateUser(cr.UserName, cr.NickName, cr.Password, cr.Role, "", c.ClientIP())
+	err := ser_user.ServiceUser{}.CreateUser(
+		cr.UserName,
+		cr.NickName,
+		cr.Password, cr.Role, "", c.ClientIP())
 	if err != nil {
 		global.Log.Error(err)
 		res.FailWithMessage(err.Error(), c)
@@ -33,3 +36,5 @@ func (ApiUser) UserCreate(c *gin.Context) {
 	res.OkWithMessage(fmt.Sprintf("用户%s创建成功!", cr.UserName), c)
 	return
 }
+
+//
