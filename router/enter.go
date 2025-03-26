@@ -31,5 +31,6 @@ func InitRouter() *gin.Engine {
 	routerGroupApp.RouterComment()
 	routerGroupApp.RouterNew()
 	routerGroupApp.RouterChat()
+	routerGroupApp.RouterLog()
 	return router
 }

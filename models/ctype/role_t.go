@@ -14,10 +14,10 @@ const (
 )
 
 func (status Role) MarshalJSON() ([]byte, error) {
-	return json.Marshal(status.string())
+	return json.Marshal(status.String())
 }
 
-func (status Role) string() string {
+func (status Role) String() string {
 	var str string
 	switch status {
 	case PermisssionAdmin:

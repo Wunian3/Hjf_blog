@@ -3,12 +3,14 @@ package common
 import (
 	"blog_server/global"
 	"blog_server/models"
+	"fmt"
 	"gorm.io/gorm"
 )
 
 type Option struct {
 	models.PageInf
 	Debug bool
+	Likes []string //模糊匹配
 }
 
 func ComList[T any](model T, option Option) (list []T, count int64, err error) {
@@ -20,11 +22,17 @@ func ComList[T any](model T, option Option) (list []T, count int64, err error) {
 	if option.Sort == "" {
 		option.Sort = "created_at desc" // 默认按照时间往前排
 	}
-	query := DB.Model(&model)
+	DB = DB.Where(model)
+	for index, column := range option.Likes {
+		if index == 0 {
+			DB.Where(fmt.Sprintf("%s like ?", column), fmt.Sprintf("%%%s%%", option.Key))
+			continue
+		}
+		DB.Or(fmt.Sprintf("%s like ?", column), fmt.Sprintf("%%%s%%", option.Key))
+	}
+	count = DB.Find(&list).RowsAffected
 
-	count = DB.Select("id").Find(&list).RowsAffected
-
-	query = DB.Where(model)
+	query := DB.Where(model) //手动复位
 	offset := (option.Page - 1) * option.Limit
 	if offset < 0 {
 		offset = 0

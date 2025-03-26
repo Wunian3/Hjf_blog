@@ -3,6 +3,7 @@ package flag
 import (
 	"blog_server/global"
 	"blog_server/models"
+	"blog_server/plugin/log_stash"
 )
 
 func Makemigrations() {
@@ -24,6 +25,7 @@ func Makemigrations() {
 			&models.FadeBackModel{},
 			&models.LogDataMd{},
 			&models.ChatModel{},
+			&log_stash.LogStashModel{},
 		)
 	if err != nil {
 		global.Log.Error("[ error ] 生成数据库表结构失败")

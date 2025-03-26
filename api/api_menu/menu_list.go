@@ -25,7 +25,7 @@ func (ApiMenu) MenuList(c *gin.Context) {
 	var menuBanners []models.MenuBannerModel
 	global.DB.Preload("BannerModel").Order("sort desc").Find(&menuBanners, "menu_id in ?", menuIDList)
 	//查表操作 设定model作为菜单，进行banner和manu连接
-	var menus []MenuRes
+	var menus = make([]MenuRes, 0)
 	for _, model := range menuList {
 		//var banners []Banner  前端粘合的时候发现的问题，会出现nil，前端无法使用，改用make可以调整为[]
 		var banners = make([]Banner, 0)
