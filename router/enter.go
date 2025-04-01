@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 	router := gin.Default()
 	router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 	router.GET("login", api_user.ApiUser{}.QQLogin)
+
 	apiRouterGroup := router.Group("api")
 	routerGroupApp := RouterGroup{apiRouterGroup}
 	routerGroupApp.RouterSettings()

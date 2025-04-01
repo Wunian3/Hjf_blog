@@ -13,6 +13,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// QQLogin qq登录，token返回带信息
+// @Tags 用户管理
+// @Summary qq登录
+// @Description qq登录，token返回带信息
+// @Param  code query string true 返回qq的code
+// @Router /api/login [post]
+// @produce json
+// @Success 200 {object} res.Response{}
 func (ApiUser) QQLogin(c *gin.Context) {
 	code := c.Query("code")
 	if code == "" {
