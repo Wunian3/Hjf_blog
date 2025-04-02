@@ -10,6 +10,7 @@ func (router RouterGroup) RouterComment() {
 	router.POST("comments", middle.JwtAuth(), apiuse.CommentCreate)
 	router.GET("comments", apiuse.CommentList)
 	router.GET("comments/:id", apiuse.CommentDigg)
+	router.GET("comments/articles", apiuse.CommentByArticleList)
 	router.DELETE("comments/:id", apiuse.CommentDelete)
 
 }

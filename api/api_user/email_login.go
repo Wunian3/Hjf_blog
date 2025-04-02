@@ -49,7 +49,7 @@ func (ApiUser) EmailLogin(c *gin.Context) {
 		NickName: userModel.NickName,
 		Role:     int(userModel.Role),
 		UserID:   userModel.ID,
-		Avatar:   userModel.Avatar,
+		//Avatar:   userModel.Avatar,
 	})
 	if err != nil {
 		global.Log.Error(err)
@@ -60,6 +60,7 @@ func (ApiUser) EmailLogin(c *gin.Context) {
 	}
 	ip, addr := utils.GetAddrByGin(c)
 	log = log_stash.New(c.ClientIP(), token)
+
 	log.Info("登录成功")
 	global.DB.Create(&models.LogDataMd{
 		UserID:    userModel.ID,

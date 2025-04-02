@@ -23,4 +23,5 @@ func (router RouterGroup) RouterUser() {
 	router.POST("users_logout", middle.JwtAuth(), apiuse.UserLogout)
 	router.DELETE("users", middle.JwtAdmin(), apiuse.UserDelete)
 	router.POST("user_email_bind", middle.JwtAuth(), apiuse.UserEmailBind)
+	router.PUT("user_info", middle.JwtAuth(), apiuse.UserUpdateNickName)
 }

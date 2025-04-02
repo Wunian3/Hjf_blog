@@ -24,3 +24,7 @@ type ESIDRequest struct {
 type ESIDListRequest struct {
 	IDList []string `json:"id_list" binding:"required"`
 }
+
+type IDRequest struct {
+	ID string `json:"id" form:"id" uri:"id"`
+}

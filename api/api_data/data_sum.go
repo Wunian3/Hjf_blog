@@ -16,6 +16,7 @@ type DataSumRes struct {
 	ChatGroupCount int `json:"chat_group_count"`
 	NowLoginCount  int `json:"now_login_count"`
 	NowSignCount   int `json:"now_sign_count"`
+	FlowCount      int `json:"flow_count"`
 }
 
 func (ApiData) DataSum(c *gin.Context) {

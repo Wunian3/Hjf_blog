@@ -29,8 +29,14 @@ func (ApiSettings) SettingsInfo(c *gin.Context) {
 		res.OkWithData(global.Config.QQ, c)
 	case "qiniu":
 		res.OkWithData(global.Config.QiNiu, c)
+	//case "jwt":
+	//	res.OkWithData(global.Config.Jwt, c)
 	case "jwt":
-		res.OkWithData(global.Config.Jwt, c)
+		info := global.Config.Jwt
+		info.Secret = "******"
+		res.OkWithData(info, c)
+	case "chat_group":
+		res.OkWithData(global.Config.ChatGroup, c)
 	default:
 		res.FailWithMessage("无配置信息，检查setinf！hjf滚回去上班", c)
 	}

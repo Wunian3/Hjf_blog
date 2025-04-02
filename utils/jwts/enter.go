@@ -6,11 +6,10 @@ import (
 
 // JwtPayLoad jwt中预备数据
 type JwtPayLoad struct {
-	//Username string `json:"username"`
-	NickName string `json:"nick_name"`
-	Role     int    `json:"role"` // 权限 管理员、普通、用户游客
-	UserID   uint   `json:"user_id"`
-	Avatar   string `json:"avatar"`
+	//Username string `json:"username"`  // 用户名
+	NickName string `json:"nick_name"` // 昵称
+	Role     int    `json:"role"`      // 权限  1 管理员  2 普通用户  3 游客
+	UserID   uint   `json:"user_id"`   // 用户id
 }
 
 type CustomClaims struct {

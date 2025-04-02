@@ -6,11 +6,21 @@ import (
 	"blog_server/models/res"
 	"blog_server/service/ser_redis"
 	"blog_server/utils"
+	"blog_server/utils/jwts"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
+// CommentDelete 删除评论
+// @Tags 评论管理
+// @Summary 删除评论
+// @Description 删除评论
+// @Param token header string  true  "token"
+// @Param id path int  true  "id"
+// @Router /api/comments/{id} [delete]
+// @Produce json
+// @Success 200 {object} res.Response{}
 func (ApiComment) CommentDelete(c *gin.Context) {
 	var cr CommentIDRequest
 	err := c.ShouldBindUri(&cr)
@@ -18,30 +28,40 @@ func (ApiComment) CommentDelete(c *gin.Context) {
 		res.FailWithCode(res.ArgumentError, c)
 		return
 	}
+	_claims, _ := c.Get("claims")
+	claims := _claims.(*jwts.CustomClaims)
 	var commentModel models.CommentModel
 	err = global.DB.Take(&commentModel, cr.ID).Error
 	if err != nil {
 		res.FailWithMessage("评论不存在", c)
 		return
 	}
-	// 统计评论下的子评论数+1,
-	//流程：判断是否是子评论，若否，找父评论，减掉对应的评论数删除子评论以及当前评论，反转，然后一个一个删
-	subCommentList := FindSubCommentCount(commentModel)
+	// 这条评论只能由当前登录人删除，或者管理员
+	if !(commentModel.UserID == claims.UserID || claims.Role == 1) {
+		res.FailWithMessage("权限错误，不可删除", c)
+		return
+	}
+
+	// 统计评论下的子评论数 再把自己算上去
+	subCommentList := models.FindAllSubCommentList(commentModel)
 	count := len(subCommentList) + 1
 	ser_redis.NewCommentCount().SetCount(commentModel.ArticleID, -count)
 
-	//
+	// 判断是否是子评论
 	if commentModel.ParentCommentID != nil {
-
+		// 子评论
+		// 找父评论，减掉对应的评论数
 		global.DB.Model(&models.CommentModel{}).
 			Where("id = ?", *commentModel.ParentCommentID).
 			Update("comment_count", gorm.Expr("comment_count - ?", count))
 	}
 
+	// 删除子评论以及当前评论
 	var deleteCommentIDList []uint
 	for _, model := range subCommentList {
 		deleteCommentIDList = append(deleteCommentIDList, model.ID)
 	}
+	// 反转，然后一个一个删
 	utils.Reverse(deleteCommentIDList)
 	deleteCommentIDList = append(deleteCommentIDList, commentModel.ID)
 	for _, id := range deleteCommentIDList {

@@ -6,7 +6,6 @@ import (
 	"blog_server/models/res"
 	"blog_server/utils/jwts"
 	"github.com/gin-gonic/gin"
-	"github.com/liu-cn/json-filter/filter"
 )
 
 // UserInfo 用户信息
@@ -28,6 +27,7 @@ func (ApiUser) UserInfo(c *gin.Context) {
 		res.FailWithMessage("用户不存在", c)
 		return
 	}
-	res.OkWithData(filter.Select("info", userInfo), c)
+	//res.OkWithData(filter.Select("info", userInfo), c)
+	res.OkWithData(userInfo, c)
 
 }
