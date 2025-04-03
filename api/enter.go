@@ -9,6 +9,7 @@ import (
 	"blog_server/api/api_digg"
 	"blog_server/api/api_image"
 	"blog_server/api/api_log"
+	"blog_server/api/api_log_v2"
 	"blog_server/api/api_menu"
 	"blog_server/api/api_msg"
 	"blog_server/api/api_new"
@@ -32,6 +33,7 @@ type ApiGroup struct {
 	ApiNew      api_new.ApiNew
 	ApiChat     api_chat.ApiChat
 	ApiLog      api_log.ApiLog
+	ApiLogV2    api_log_v2.ApiLog
 	ApiData     api_data.ApiData
 	ApiRole     api_role.ApiRole
 }

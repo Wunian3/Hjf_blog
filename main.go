@@ -8,7 +8,6 @@ import (
 	"blog_server/router"
 	"blog_server/service/ser_cron"
 	"blog_server/utils"
-	"net/http"
 )
 
 // 配置
@@ -40,7 +39,6 @@ func main() {
 	ser_cron.CronInit()
 
 	router := router.InitRouter()
-	router.StaticFS("/uploads", http.Dir(`E:\GO\hjf_blog\blog_server\uploads`))
 	addr := global.Config.System.Addr()
 
 	utils.PrintSystem()

@@ -10,30 +10,38 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (ApiUser) UserList(c *gin.Context) {
-	//// 管理员的判定
-	//token := c.Request.Header.Get("token")
-	//if token == "" {
-	//	res.FailWithMessage("未携带token", c)
-	//	return
-	//}
+type UserRes struct {
+	models.UserModel
+	RoleId int `json:"role_id"`
+}
+type UserListRes struct {
+	models.PageInf
+	Role int `json:"role" form:"role"`
+}
 
-	//claims, err := jwts.ParseToken(token)
-	//if err != nil {
-	//	res.FailWithMessage("token错误", c)
-	//	return
-	//}
+// UserList 用户列表
+// @Tags 用户管理
+// @Summary 用户列表
+// @Description 用户列表
+// @Router /api/users [put]
+// @Param token header string  true  "token"
+// @Param data query models.PageInf  false  "查询参数"
+// @Produce json
+// @Success 200 {object} res.Response{data=res.ListRes[models.UserModel]}
+func (ApiUser) UserList(c *gin.Context) {
+
 	_claims, _ := c.Get("claims")
 	claims := _claims.(*jwts.CustomClaims)
 
-	var page models.PageInf
+	var page UserListRes
 	if err := c.ShouldBindQuery(&page); err != nil {
 		res.FailWithCode(res.ArgumentError, c)
 		return
 	}
-	var users []models.UserModel
-	list, count, _ := common.ComList(models.UserModel{}, common.Option{
-		PageInf: page,
+	var users []UserRes
+	list, count, _ := common.ComList(models.UserModel{Role: ctype.Role(page.Role)}, common.Option{
+		PageInf: page.PageInf,
+		Likes:   []string{"nick_name"},
 	})
 	for _, user := range list {
 		if ctype.Role(claims.Role) != ctype.PermisssionAdmin {
@@ -41,8 +49,34 @@ func (ApiUser) UserList(c *gin.Context) {
 		}
 		user.Tel = desens.DesensitizationTel(user.Tel)
 		user.Email = desens.DesensitizationEmail(user.Email)
-		users = append(users, user)
+		users = append(users, UserRes{
+			UserModel: user,
+			RoleId:    int(user.Role),
+		})
 	}
 
 	res.OkWithList(users, count, c)
+
+	//_claims, _ := c.Get("claims")
+	//claims := _claims.(*jwts.CustomClaims)
+	//
+	//var page models.PageInf
+	//if err := c.ShouldBindQuery(&page); err != nil {
+	//	res.FailWithCode(res.ArgumentError, c)
+	//	return
+	//}
+	//var users []models.UserModel
+	//list, count, _ := common.ComList(models.UserModel{}, common.Option{
+	//	PageInf: page,
+	//})
+	//for _, user := range list {
+	//	if ctype.Role(claims.Role) != ctype.PermisssionAdmin {
+	//		user.UserName = ""
+	//	}
+	//	user.Tel = desens.DesensitizationTel(user.Tel)
+	//	user.Email = desens.DesensitizationEmail(user.Email)
+	//	users = append(users, user)
+	//}
+	//
+	//res.OkWithList(users, count, c)
 }
