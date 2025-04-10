@@ -5,6 +5,7 @@ import (
 	"blog_server/models"
 	"blog_server/models/res"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 type ImageRes struct {
@@ -25,5 +26,14 @@ func (ApiImage) ImagNameList(c *gin.Context) {
 	var imageList []ImageRes
 	global.DB.Model(models.BannerModel{}).Select("id", "path", "name").Scan(&imageList)
 
+	for i := range imageList {
+		path := imageList[i].Path
+		if strings.HasPrefix(path, "uploads/") {
+			// 如果是本地路径且没有前导斜杠，则添加 "/"
+			if !strings.HasPrefix(path, "/") {
+				imageList[i].Path = "/" + path
+			}
+		}
+	}
 	res.OkWithData(imageList, c)
 }

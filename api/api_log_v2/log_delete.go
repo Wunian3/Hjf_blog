@@ -36,7 +36,6 @@ func (ApiLog) LogDelete(c *gin.Context) {
 		res.FailWithMessage("参数错误", c)
 		return
 	}
-
 	var logs []log_stash.LogModel
 	if len(cr.IDList) > 0 {
 		log.SetItemInfo("IDList", cr.IDList)

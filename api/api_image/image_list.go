@@ -5,6 +5,7 @@ import (
 	"blog_server/models/res"
 	"blog_server/service/common"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 // ImageList 图片列表
@@ -27,6 +28,15 @@ func (ApiImage) ImageList(c *gin.Context) {
 		PageInf: cr,
 		Debug:   true,
 	})
+	for i := range list {
+		path := list[i].Path
+		if strings.HasPrefix(path, "uploads/") {
+			// 如果是本地路径且没有前导斜杠，则添加 "/"
+			if !strings.HasPrefix(path, "/") {
+				list[i].Path = "/" + path
+			}
+		}
+	}
 
 	res.OkWithList(list, count, c)
 

@@ -21,15 +21,15 @@ func (status Role) String() string {
 	var str string
 	switch status {
 	case PermisssionAdmin:
-		str = "permisssion_admin"
+		str = "管理员"
 	case PermisssionUser:
-		str = "permisssion_user"
+		str = "普通用户"
 	case PermisssionVisitor:
-		str = "permisssion_visitor"
+		str = "游客"
 	case PermisssionDisableUser:
-		str = "permisssion_disable_user"
+		str = "黑名单的家伙"
 	default:
-		str = "permisssion_unknown"
+		str = "unknown"
 	}
 	return str
 }

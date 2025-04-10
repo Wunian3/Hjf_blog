@@ -41,7 +41,7 @@ func (ApiUser) UserList(c *gin.Context) {
 	var users []UserRes
 	list, count, _ := common.ComList(models.UserModel{Role: ctype.Role(page.Role)}, common.Option{
 		PageInf: page.PageInf,
-		Likes:   []string{"nick_name"},
+		Likes:   []string{"nick_name", "user_name"},
 	})
 	for _, user := range list {
 		if ctype.Role(claims.Role) != ctype.PermisssionAdmin {

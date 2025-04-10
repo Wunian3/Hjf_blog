@@ -4,19 +4,19 @@ import (
 	"github.com/dgrijalva/jwt-go/v4"
 )
 
-type JwyPayLoad struct {
-	NickName string `json:"nick_name"`
-	RoleID   uint   `json:"role"`
-	UserID   uint   `json:"user_id"`
-	UserName string `json:"username"`
+type JwtPayLoad struct {
+	UserName string `json:"user_name"` // 用户名
+	NickName string `json:"nick_name"` // 昵称
+	Role     int    `json:"role"`      // 权限  1 管理员  2 普通用户  3 游客
+	UserID   uint   `json:"user_id"`   // 用户id
 }
 
 type CustomClaims struct {
-	JwyPayLoad
+	JwtPayLoad
 	jwt.StandardClaims
 }
 
-func parseToken(token string) (jwtPayload *JwyPayLoad) {
+func parseToken(token string) (jwtPayload *JwtPayLoad) {
 	Token, _ := jwt.ParseWithClaims(token, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(""), nil
 	})
@@ -27,5 +27,5 @@ func parseToken(token string) (jwtPayload *JwyPayLoad) {
 	if !ok {
 		return nil
 	}
-	return &claims.JwyPayLoad
+	return &claims.JwtPayLoad
 }

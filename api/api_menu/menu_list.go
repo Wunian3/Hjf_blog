@@ -5,6 +5,7 @@ import (
 	"blog_server/models"
 	"blog_server/models/res"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 type Banner struct {
@@ -18,6 +19,13 @@ type MenuRes struct {
 	Banners []Banner `json:"banners"`
 }
 
+// MenuList 菜单列表
+// @Tags 菜单管理
+// @Summary 菜单列表
+// @Description 菜单列表
+// @Router /api/menus [get]
+// @Produce json
+// @Success 200 {object} res.Response{data=res.ListRes[MenuRes]}
 func (ApiMenu) MenuList(c *gin.Context) {
 	var menuList []models.MenuModel
 	var menuIDList []uint
@@ -33,10 +41,15 @@ func (ApiMenu) MenuList(c *gin.Context) {
 			if model.ID != banner.MenuID {
 				continue
 			}
-			//循环查看表观察是否有图，如果没有就不给
+			path := banner.BannerModel.Path
+			// 如果是本地路径（以 "uploads/" 开头）且没有前导斜杠，则添加 "/"
+			if strings.HasPrefix(path, "uploads/") && !strings.HasPrefix(path, "/") {
+				path = "/" + path
+			}
+			// 对于 Qiniu 路径，保持不变
 			banners = append(banners, Banner{
 				ID:   banner.BannerID,
-				Path: banner.BannerModel.Path,
+				Path: path,
 			})
 		}
 		menus = append(menus, MenuRes{
@@ -44,6 +57,6 @@ func (ApiMenu) MenuList(c *gin.Context) {
 			Banners:   banners,
 		})
 	}
-	res.OkWithData(menus, c)
+	res.OkWithList(menus, int64(len(menus)), c)
 	return
 }

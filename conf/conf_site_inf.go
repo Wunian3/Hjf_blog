@@ -1,7 +1,7 @@
 package conf
 
 // 待定，暂时看看
-type SiteInf struct {
+type SiteInfo struct {
 	CreatedAt   string `yaml:"created_at" json:"created_at"`
 	BeiAn       string `yaml:"bei_an" json:"bei_an"`
 	Title       string `yaml:"title" json:"title"`
@@ -15,7 +15,7 @@ type SiteInf struct {
 	Slogan      string `yaml:"slogan" json:"slogan"`
 	SloganEn    string `yaml:"slogan_en" json:"slogan_en"`
 	Web         string `yaml:"web" json:"web"`
-	//BiliBiliUrl string `yaml:"bilibili_url" json:"bilibili_url"`
-	GiteeUrl  string `yaml:"gitee_url" json:"gitee_url"`
-	GithubUrl string `yaml:"github_url" json:"github_url"`
+	BiliBiliUrl string `yaml:"bilibili_url" json:"bilibili_url"`
+	GiteeUrl    string `yaml:"gitee_url" json:"gitee_url"`
+	GithubUrl   string `yaml:"github_url" json:"github_url"`
 }

@@ -3,6 +3,7 @@ package flag
 import (
 	"blog_server/global"
 	"blog_server/models"
+	"blog_server/plugin/log_stash"
 	"blog_server/plugin/log_stash_v2"
 )
 
@@ -25,7 +26,7 @@ func Makemigrations() {
 			&models.FadeBackModel{},
 			&models.LogDataMd{},
 			&models.ChatModel{},
-			//&log_stash.LogStashModel{},
+			&log_stash.LogStashModel{},
 			&log_stash_v2.LogModel{},
 		)
 	if err != nil {

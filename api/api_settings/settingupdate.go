@@ -5,6 +5,7 @@ import (
 	"blog_server/core"
 	"blog_server/global"
 	"blog_server/models/res"
+	"blog_server/utils/jwts"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,16 +17,14 @@ func (ApiSettings) SettingsInfoUpdate(c *gin.Context) {
 		res.FailWithCode(res.ArgumentError, c)
 		return
 	}
+	_claims, _ := c.Get("claims")
+	claims := _claims.(*jwts.CustomClaims)
+	// 校验角色，游客用户（Role == 3）不可访问
+	if claims.Role == 3 {
+		res.FailWithMessage("游客用户无权访问此配置", c)
+		return
+	}
 	switch cr.Name {
-	case "site":
-		var inf conf.SiteInf
-		err = c.ShouldBindJSON(&inf)
-		if err != nil {
-			res.FailWithCode(res.ArgumentError, c)
-			return
-		}
-		global.Config.SiteInf = inf
-
 	case "email":
 		var inf conf.Email
 		err = c.ShouldBindJSON(&inf)

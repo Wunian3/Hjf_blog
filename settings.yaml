@@ -3,61 +3,81 @@ mysql:
   port: 3306
   db: hblog_db
   user: root
-  password: 123456
+  password: "123456"
   log_level: dev
-  config: "charset=utf8mb4&parseTime=True&loc=Local"
+  config: charset=utf8mb4&parseTime=True&loc=Local
 logger:
   level: info
   director: log
   show_line: true
   log_in_console: true
   prefix: '[hjf_blog]'
+site_info:
+  created_at: "2"
+  bei_an: "2"
+  title: "2"
+  qq_image: ""
+  version: "2"
+  email: "2"
+  wechat_image: ""
+  name: "2"
+  job: "2"
+  addr: "2"
+  slogan: "2"
+  slogan_en: "2"
+  web: ""
+  bilibili_url: ""
+  gitee_url: ""
+  github_url: ""
 system:
   host: 0.0.0.0
   port: 8080
   env: release
-upload:
-  size: 6
-  path: uploads/file
-site_inf:
-  created_at: "2025-3-10"
-  title: hjf_wunian的BLOG
-  email: 1243624625@qq.com
-  name: 雾念的BLOG
-  job: 有朝一日成为全栈
-  slogan: 雾念的BLOG
-jwt:
-  secret: hjf
-  expires: 48
-  issuer: "1234"
 qq:
-  app_id: "需要修改"
+  app_id: 需要修改
   key: xx
   redirect: http://xx.xx.com/login?flag=qq
+qi_niu:
+  enable: false
+  access_key: w0_GVYiOBUeSpg4pGbsHGBTa9geB1WWJqUXzjj2z
+  secret_key: ogktTWTpumr2h5oUbRGbiz2EPjZ9ltqYlr4psOpm
+  bucket: wunianblog
+  cdn: su2l8211x.hn-bkt.clouddn.com/
+  zone: z2
+  prefix: wunianblog
+  size: 6
 email:
   host: smtp.qq.com
   port: 465
   user: hwunian@qq.com
-  password: "tvanyopklydgghgg"
-  default_from_email: hjfBlog
-  use-ssl: true
-  user-tls: false
-qi_niu:
-  enable: true
-  access_key: w0_GVYiOBUeSpg4pGbsHGBTa9geB1WWJqUXzjj2z
-  secret_key: ogktTWTpumr2h5oUbRGbiz2EPjZ9ltqYlr4psOpm
-  bucket: wunianblog
-  cdn: su2l8211x.hn-bkt.clouddn.com
-  zone: z2
+  password: "1234"
+  default_from_email: hjfBlog1
+  use_ssl: false
+  user_tls: false
+jwt:
+  secret: hjf
+  expires: 48
+  issuer: "1234"
+upload:
   size: 6
-  prefix: "wunianblog"
+  path: uploads/file
 redis:
   ip: 127.0.0.1
   port: 6379
-  password: "redis"
+  password: redis
   pool_size: 100
 es:
-  host: "http://127.0.0.1"
+  host: http://127.0.0.1
   port: 9200
-  user:
-  password:
+  user: ""
+  password: ""
+chat_group:
+  isAnonymous: false
+  isShowTime: false
+  defaultLimit: 0
+  contentLength: 0
+  welcomeTitle: ""
+  isOnlinePeople: false
+  isSendImage: false
+  isSendFile: false
+  isMd: false

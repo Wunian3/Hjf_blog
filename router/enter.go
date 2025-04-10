@@ -2,6 +2,7 @@ package router
 
 import (
 	"blog_server/global"
+	"blog_server/middle"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	gs "github.com/swaggo/gin-swagger"
@@ -15,10 +16,9 @@ type RouterGroup struct {
 func InitRouter() *gin.Engine {
 	gin.SetMode(global.Config.System.Env)
 	router := gin.Default()
-	//router.Use(middleware.LogMiddleware())
-	router.StaticFS("/uploads", http.Dir(`E:\GO\hjf_blog\blog_server\uploads`))
+	router.Use(middle.LogMiddleWare())
+	router.StaticFS("uploads", http.Dir("uploads"))
 	router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
-	//router.GET("login", api_user.ApiUser{}.QQLogin)
 
 	apiRouterGroup := router.Group("api")
 	routerGroupApp := RouterGroup{apiRouterGroup}

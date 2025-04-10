@@ -3,7 +3,7 @@ package conf
 type Config struct {
 	Mysql     Mysql     `yaml:"mysql"`
 	Logger    Logger    `yaml:"logger"`
-	SiteInf   SiteInf   `yaml:"site_inf"`
+	SiteInfo  SiteInfo  `yaml:"site_info"`
 	System    System    `yaml:"system"`
 	QQ        QQ        `yaml:"qq"`
 	QiNiu     QiNiu     `yaml:"qi_niu"`

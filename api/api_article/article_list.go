@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/liu-cn/json-filter/filter"
 	"github.com/olivere/elastic/v7"
+	"strings"
 )
 
 type ArticleSearchRequest struct {
@@ -56,6 +57,15 @@ func (ApiArticle) ArticleList(c *gin.Context) {
 		return
 	}
 
+	for i := range list {
+		if strings.HasPrefix(list[i].BannerUrl, "uploads/") && !strings.HasPrefix(list[i].BannerUrl, "/") {
+			list[i].BannerUrl = "/" + list[i].BannerUrl
+		}
+		if strings.HasPrefix(list[i].UserAvatar, "uploads/") && !strings.HasPrefix(list[i].UserAvatar, "/") {
+			list[i].UserAvatar = "/" + list[i].UserAvatar
+		}
+	}
+
 	// json-filter空值问题
 	data := filter.Omit("list", list)
 	_list, _ := data.(filter.Filter)
@@ -64,6 +74,7 @@ func (ApiArticle) ArticleList(c *gin.Context) {
 		res.OkWithList(list, int64(count), c)
 		return
 	}
+
 	res.OkWithList(data, int64(count), c)
 }
 

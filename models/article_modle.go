@@ -28,9 +28,9 @@ type ArticleModel struct {
 	UserNickName string `json:"user_nick_name" structs:"user_nick_name"` // 文章名称
 	UserAvatar   string `json:"user_avatar" structs:"user_avatar"`       //用户头像
 
-	Category string `json:"category" structs:"category"`        // 文章分类
-	Source   string `json:"source,omit(list)" structs:"source"` // 文章来源
-	Link     string `json:"link,omit(list)" structs:"link"`     // 原文链接
+	Category string `json:"category" structs:"category"`    // 文章分类
+	Source   string `json:"source" structs:"source"`        // 文章来源
+	Link     string `json:"link,omit(list)" structs:"link"` // 原文链接
 
 	BannerUrl string `json:"banner_url" structs:"banner_url"` // 文章封面
 	BannerID  uint   `json:"banner_id" structs:"banner_id"`   // 文章封面id

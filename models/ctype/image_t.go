@@ -17,11 +17,11 @@ func (status ImageType) string() string {
 	var str string
 	switch status {
 	case Local:
-		str = "local"
+		str = "本地"
 	case QiNiu:
-		str = "qiniu"
+		str = "七牛云"
 	default:
-		str = "unknown"
+		str = "未知"
 	}
 	return str
 }
