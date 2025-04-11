@@ -22,15 +22,6 @@ type LogListRequest struct {
 	UserName string            `json:"userName" form:"userName"` // 查用户名
 }
 
-// LogList 日志列表
-// @Tags 日志管理V2
-// @Summary 日志列表
-// @Description 日志列表
-// @Param data query LogListRequest true "参数"
-// @Param token header string true "token"
-// @Router /api/logs/v2 [get]
-// @Produce json
-// @Success 200 {object} res.Response{data=res.ListResponse[log_stash.LogModel]}
 func (ApiLog) LogList(c *gin.Context) {
 	var cr LogListRequest
 	c.ShouldBindQuery(&cr)

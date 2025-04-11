@@ -14,14 +14,6 @@ type CommentListRequest struct {
 	ArticleID string `form:"id" uri:"id" json:"id"`
 }
 
-// CommentList 文章下的评论列表
-// @Tags 评论管理
-// @Summary 文章下的评论列表
-// @Description 文章下的评论列表
-// @Param id path string  true  "id"
-// @Router /api/comments/{id} [get]
-// @Produce json
-// @Success 200 {object} res.Response{data=[]models.CommentModel}
 func (ApiComment) CommentList(c *gin.Context) {
 	var cr CommentListRequest
 	err := c.ShouldBindUri(&cr)

@@ -20,15 +20,6 @@ type MessageUserListResponse struct {
 	Count    int    `json:"count"`
 }
 
-// MessageUserList 有消息的用户列表
-// @Tags 消息管理
-// @Summary 有消息的用户列表
-// @Description 有消息的用户列表
-// @Router /api/message_users [get]
-// @Param token header string  true  "token"
-// @Param data query MessageUserListRequest   false  "查询参数"
-// @Produce json
-// @Success 200 {object} res.Response{data=res.ListResponse[MessageUserListResponse]}
 func (ApiMsg) MessageUserList(c *gin.Context) {
 	var cr MessageUserListRequest
 	c.ShouldBindQuery(&cr)

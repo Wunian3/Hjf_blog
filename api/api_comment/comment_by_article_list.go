@@ -22,15 +22,6 @@ type CommentByArticleListResponse struct {
 	Count int    `json:"count"`
 }
 
-// CommentByArticleList 有评论的文章列表
-// @Tags 评论管理
-// @Summary 有评论的文章列表
-// @Description 有评论的文章列表
-// @Param id path string  true  "id"
-// @Param data query CommentByArticleListRequest  true  "参数"
-// @Router /api/comments/articles [get]
-// @Produce json
-// @Success 200 {object} res.Response{data=res.ListResponse[CommentByArticleListResponse]}
 func (ApiComment) CommentByArticleList(c *gin.Context) {
 	var cr CommentByArticleListRequest
 	c.ShouldBindQuery(&cr)

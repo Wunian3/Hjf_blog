@@ -50,8 +50,8 @@ email:
   host: smtp.qq.com
   port: 465
   user: hwunian@qq.com
-  password: "1234"
-  default_from_email: hjfBlog1
+  password: "tiabzlvumcjrhjeg"
+  default_from_email: gerneboke
   use_ssl: false
   user_tls: false
 jwt:

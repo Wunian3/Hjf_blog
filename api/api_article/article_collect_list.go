@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/olivere/elastic/v7"
+	"strings"
 )
 
 type CollectRes struct {
@@ -62,10 +63,16 @@ func (ApiArticle) ArticleCollList(c *gin.Context) {
 			continue
 		}
 		article.ID = hit.Id
-		collList = append(collList, CollectRes{
+		article.Content = ""
+		collectRes := CollectRes{
 			ArticleModel: article,
 			CreatedAt:    collMap[hit.Id],
-		})
+		}
+		// Process BannerUrl: add leading / if needed
+		if strings.HasPrefix(collectRes.BannerUrl, "uploads/") && !strings.HasPrefix(collectRes.BannerUrl, "/") {
+			collectRes.BannerUrl = "/" + collectRes.BannerUrl
+		}
+		collList = append(collList, collectRes)
 	}
 	res.OkWithList(collList, count, c)
 }

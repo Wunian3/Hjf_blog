@@ -4,13 +4,14 @@ import (
 	"blog_server/global"
 	"blog_server/models"
 	"blog_server/models/res"
+	"blog_server/utils/jwts"
 	"github.com/gin-gonic/gin"
 )
 
 type MsgRequest struct {
-	SendUserID uint   `json:"send_user_id" binding:"required"` // 发送人id
-	RevUserID  uint   `json:"rev_user_id" binding:"required"`  // 接收人id
-	Content    string `json:"content" binding:"required"`      // 消息内容
+	//SendUserID uint   `json:"send_user_id" binding:"required"` // 发送人id
+	RevUserID uint   `json:"rev_user_id" binding:"required"` // 接收人id
+	Content   string `json:"content" binding:"required"`     // 消息内容
 }
 
 // MessageCreateView 发布消息
@@ -21,26 +22,29 @@ func (ApiMsg) MsgCreate(c *gin.Context) {
 		res.FailWithError(err, &cr, c)
 		return
 	}
-	var senUser, recvUser models.UserModel
+	var senUser, revUser models.UserModel
 
-	err = global.DB.Take(&senUser, cr.SendUserID).Error
+	_claims, _ := c.Get("claims")
+	claims := _claims.(*jwts.CustomClaims)
+
+	err = global.DB.Take(&senUser, claims.UserID).Error
 	if err != nil {
 		res.FailWithMessage("发送人不存在", c)
 		return
 	}
-	err = global.DB.Take(&recvUser, cr.RevUserID).Error
+	err = global.DB.Take(&revUser, cr.RevUserID).Error
 	if err != nil {
 		res.FailWithMessage("接收人不存在", c)
 		return
 	}
 
 	err = global.DB.Create(&models.MsgModel{
-		SendUserID:       cr.SendUserID,
+		SendUserID:       senUser.ID,
 		SendUserNickName: senUser.NickName,
 		SendUserAvatar:   senUser.Avatar,
 		RevUserID:        cr.RevUserID,
-		RevUserNickName:  recvUser.NickName,
-		RevUserAvatar:    recvUser.Avatar,
+		RevUserNickName:  revUser.NickName,
+		RevUserAvatar:    revUser.Avatar,
 		IsRead:           false,
 		Content:          cr.Content,
 	}).Error

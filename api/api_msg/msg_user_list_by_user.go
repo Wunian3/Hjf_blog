@@ -19,7 +19,7 @@ type MessageUserListByUserRequest struct {
 // @Param token header string  true  "token"
 // @Param data query MessageUserListByUserRequest   false  "查询参数"
 // @Produce json
-// @Success 200 {object} res.Response{data=res.ListResponse[MessageUserListResponse]}
+// @Success 200 {object} res.Response{data=res.ListRes[MsgRequest]}
 func (ApiMsg) MessageUserListByUser(c *gin.Context) {
 	var cr MessageUserListByUserRequest
 	err := c.ShouldBindQuery(&cr)
