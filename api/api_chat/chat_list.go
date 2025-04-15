@@ -21,6 +21,11 @@ func (ApiChat) ChatList(c *gin.Context) {
 	list, count, _ := common.ComList(models.ChatModel{IsGroup: true}, common.Option{
 		PageInf: cr,
 	})
+	//for i := range list {
+	//	if strings.HasPrefix(list[i].Avatar, "uploads/") && !strings.HasPrefix(list[i].Avatar, "/") {
+	//		list[i].Avatar = "/" + list[i].Avatar
+	//	}
+	//}
 	data := filter.Omit("list", list)
 	_list, _ := data.(filter.Filter)
 	if string(_list.MustMarshalJSON()) == "{}" {

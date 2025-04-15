@@ -16,6 +16,6 @@ func (router RouterGroup) RouterMsg() {
 	router.GET("message_users/record", apiuse.MessageUserRecord)
 	router.GET("message_users/record/me", middle.JwtAuth(), apiuse.MessageUserRecordByMe)
 	router.GET("message_users/user", middle.JwtAuth(), apiuse.MessageUserListByUser)
-	router.DELETE("message_users", apiuse.MessageRecordDelete)
+	router.DELETE("message_users", middle.JwtAuth(), apiuse.MessageRecordDelete)
 
 }

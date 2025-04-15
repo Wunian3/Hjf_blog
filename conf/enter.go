@@ -13,4 +13,5 @@ type Config struct {
 	Redis     Redis     `yaml:"redis"`
 	ES        ES        `yaml:"es"`
 	ChatGroup ChatGroup `yaml:"chat_group"`
+	Gaode     Gaode     `yaml:"gaode"`
 }

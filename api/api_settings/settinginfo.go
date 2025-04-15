@@ -43,6 +43,10 @@ func (ApiSettings) SettingsInfo(c *gin.Context) {
 		res.OkWithData(info, c)
 	case "chat_group":
 		res.OkWithData(global.Config.ChatGroup, c)
+	case "gaode":
+		info := global.Config.Gaode
+		info.Key = "******"
+		res.OkWithData(info, c)
 	default:
 		res.FailWithMessage("无配置信息", c)
 

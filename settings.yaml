@@ -13,22 +13,22 @@ logger:
   log_in_console: true
   prefix: '[hjf_blog]'
 site_info:
-  created_at: "2"
-  bei_an: "2"
-  title: "2"
-  qq_image: ""
-  version: "2"
-  email: "2"
-  wechat_image: ""
-  name: "2"
-  job: "2"
-  addr: "2"
-  slogan: "2"
-  slogan_en: "2"
+  created_at: "2025-04-14"
+  bei_an: 闽ICP备2025095031号
+  title: 雾念的知识空间
+  qq_image: /uploads/file/admin/wallhaven-zy1ooy_1280x1024_20250414212739.png
+  version: 1.0.0
+  email: eogod124@gmail.com
+  wechat_image: /uploads/file/admin/img5_20250414212747.jpg
+  name: 雾念
+  job: 学生啦
+  addr: 福建宁德
+  slogan: 雾念的知识空间
+  slogan_en: WuNianBLOG
   web: ""
-  bilibili_url: ""
-  gitee_url: ""
-  github_url: ""
+  bilibili_url: https://space.bilibili.com/457254347
+  gitee_url: https://gitee.com/eo_wunian
+  github_url: https://github.com/Wunian3
 system:
   host: 0.0.0.0
   port: 8080
@@ -50,7 +50,7 @@ email:
   host: smtp.qq.com
   port: 465
   user: hwunian@qq.com
-  password: "tiabzlvumcjrhjeg"
+  password: tiabzlvumcjrhjeg
   default_from_email: gerneboke
   use_ssl: false
   user_tls: false
@@ -74,10 +74,13 @@ es:
 chat_group:
   isAnonymous: false
   isShowTime: false
-  defaultLimit: 0
-  contentLength: 0
-  welcomeTitle: ""
-  isOnlinePeople: false
-  isSendImage: false
+  defaultLimit: 50
+  contentLength: 10000
+  welcomeTitle: 雾念的学习室
+  isOnlinePeople: true
+  isSendImage: true
   isSendFile: false
-  isMd: false
+  isMd: true
+gaode:
+  enable: true
+  key: 2ea0778aa0b96da0ce2abfc45fe22ca0

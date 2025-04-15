@@ -28,6 +28,7 @@ func Makemigrations() {
 			&models.ChatModel{},
 			&log_stash.LogStashModel{},
 			&log_stash_v2.LogModel{},
+			&models.FeedbackModel{},
 		)
 	if err != nil {
 		global.Log.Error("[ error ] 生成数据库表结构失败")

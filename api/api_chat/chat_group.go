@@ -122,6 +122,7 @@ func (ApiChat) ChatGroup(c *gin.Context) {
 			SendGroupMsg(conn, GroupRes{
 				NickName:    chatUser.NickName,
 				Avatar:      chatUser.Avatar,
+				MsgType:     InRoomMsg,
 				Content:     fmt.Sprintf("%s 进入聊天室", chatUser.NickName),
 				Date:        time.Now(),
 				OnLineCount: len(ConnGroupMap),
