@@ -3,10 +3,12 @@ package api
 import (
 	"blog_server/api/api_advert"
 	"blog_server/api/api_article"
+	"blog_server/api/api_big_model"
 	"blog_server/api/api_chat"
 	"blog_server/api/api_comment"
 	"blog_server/api/api_data"
 	"blog_server/api/api_digg"
+	"blog_server/api/api_feedback"
 	"blog_server/api/api_gaode"
 	"blog_server/api/api_image"
 	"blog_server/api/api_log"
@@ -38,6 +40,8 @@ type ApiGroup struct {
 	ApiData     api_data.ApiData
 	ApiRole     api_role.ApiRole
 	ApiGaode    api_gaode.ApiGaode
+	ApiFeedback api_feedback.ApiFeedback
+	ApiBigModel api_big_model.ApiBigModel
 }
 
 var ApiGroupApp = new(ApiGroup)

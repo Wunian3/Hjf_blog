@@ -84,3 +84,31 @@ chat_group:
 gaode:
   enable: true
   key: 2ea0778aa0b96da0ce2abfc45fe22ca0
+big-model:
+  setting:
+    name: qwen
+    enable: true
+    api-key: "sk-f163b622cce7400bb29f63fbc2f7cab9"
+    api-secret: ""
+    title: "雾念的千问频道"
+    prompt: ""
+  model-list:
+  - label: 通义千问
+    value: qwen
+    disable: false
+  - label: 文心一言
+    value: wenxin
+    disable: true
+  - label: 星火大模型
+    value: xinghuo
+    disable: true
+  - label: 天工大模型
+    value: tiangong
+    disable: true
+  - label: DeepSeek
+    value: deepseek
+    disable: true
+  session-setting:
+    chat-scope: 21
+    session-scope: 21
+    day-scope: 100

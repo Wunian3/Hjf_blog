@@ -13,11 +13,6 @@ import (
 	"time"
 )
 
-//type params struct {
-//	ID   string `json:"id"`
-//	Size int    `json:"size"`
-//}  //old v0.1
-
 type header struct {
 	Signaturekey string `form:"signaturekey" structs:"signaturekey"`
 	Version      string `form:"version" structs:"version"`
@@ -25,19 +20,11 @@ type header struct {
 }
 
 type NewResponse struct {
-	//Code int                 `json:"code"`
-	//Data []ser_redis.NewData `json:"data"`
-	//Msg  string              `json:"msg"`   //0.1版本存档
 	Success bool                `json:"success"`
 	Message string              `json:"message"`
 	Data    []ser_redis.NewData `json:"data"`
 }
-type OutputResponse struct {
-	Code int                 `json:"code"`
-	Data []ser_redis.NewData `json:"data"`
-}
 
-const newAPI = "https://api.vvhan.com/api/hotlist/baiduRD"
 const timeout = 2 * time.Minute
 
 func (ApiNew) NewList(c *gin.Context) {
@@ -48,23 +35,40 @@ func (ApiNew) NewList(c *gin.Context) {
 		return
 	}
 
-	// 从查询参数中获取 size
+	// 获取 source 和 size 参数
+	source := c.Query("source")
 	sizeStr := c.Query("size")
 	size, err := strconv.Atoi(sizeStr)
 	if err != nil || size <= 0 {
 		size = 10 // 默认返回 10 条数据
 	}
 
-	// 生成缓存键，包含 size
-	key := fmt.Sprintf("baidu-hotlist-%d", size)
+	// 定义新闻源和对应的 API 地址
+	apiMap := map[string]string{
+		"baidu":    "https://api.vvhan.com/api/hotlist/baiduRD",
+		"bilibili": "https://api.vvhan.com/api/hotlist/bili",
+		"zhihu":    "https://api.vvhan.com/api/hotlist/zhihuHot",
+		"weibo":    "https://api.vvhan.com/api/hotlist/wbHot",
+		"toutiao":  "https://api.vvhan.com/api/hotlist/toutiao",
+	}
+
+	// 检查 source 是否有效
+	apiURL, ok := apiMap[source]
+	if !ok {
+		res.FailWithMessage("无效的新闻源参数", c)
+		return
+	}
+
+	// 生成缓存键，包含 source 和 size
+	key := fmt.Sprintf("%s-hotlist-%d", source, size)
 	newsData, _ := ser_redis.GetNews(key)
 	if len(newsData) != 0 {
 		res.OkWithData(newsData, c)
 		return
 	}
 
-	// 发送 GET 请求获取所有数据
-	httpResponse, err := requests.Get(newAPI, structs.Map(headers), timeout)
+	// 发送 GET 请求获取数据
+	httpResponse, err := requests.Get(apiURL, structs.Map(headers), timeout)
 	if err != nil {
 		res.FailWithMessage(err.Error(), c)
 		return
@@ -97,47 +101,3 @@ func (ApiNew) NewList(c *gin.Context) {
 	ser_redis.SetNews(key, limitedData)
 	return
 }
-
-// todo :old v0.1微博api
-//
-//	func (ApiNew) NewList(c *gin.Context) {
-//		var cr params
-//		var headers header
-//		err := c.ShouldBindJSON(&cr)
-//		err = c.ShouldBindHeader(&headers)
-//		if err != nil {
-//			res.FailWithCode(res.ArgumentError, c)
-//			return
-//		}
-//		if cr.Size == 0 {
-//			cr.Size = 1
-//		}
-//
-//		key := fmt.Sprintf("%s-%d", cr.ID, cr.Size)
-//		newsData, _ := ser_redis.GetNews(key)
-//		if len(newsData) != 0 {
-//			res.OkWithData(newsData, c)
-//			return
-//		}
-//
-//		httpResponse, err := requests.Post(newAPI, cr, structs.Map(headers), timeout)
-//		if err != nil {
-//			res.FailWithMessage(err.Error(), c)
-//			return
-//		}
-//
-//		var response NewResponse
-//		byteData, err := io.ReadAll(httpResponse.Body)
-//		err = json.Unmarshal(byteData, &response)
-//		if err != nil {
-//			res.FailWithMessage(err.Error(), c)
-//			return
-//		}
-//		if response.Code != 200 {
-//			res.FailWithMessage(response.Msg, c)
-//			return
-//		}
-//		res.OkWithData(response.Data, c)
-//		ser_redis.SetNews(key, response.Data)
-//		return
-//	}
