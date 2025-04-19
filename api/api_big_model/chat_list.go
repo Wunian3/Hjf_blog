@@ -46,6 +46,8 @@ func (ApiBigModel) ChatListView(c *gin.Context) {
 		}
 	}
 
+	cr.Sort = "created_at asc"
+
 	_list, count, _ := common.ComList(models.BigModelChatModel{SessionID: cr.SessionID}, common.Option{
 		PageInf: cr.PageInf,
 		Preload: []string{"RoleModel", "UserModel"},

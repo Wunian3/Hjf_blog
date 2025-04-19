@@ -88,27 +88,29 @@ big-model:
   setting:
     name: qwen
     enable: true
-    api-key: "sk-f163b622cce7400bb29f63fbc2f7cab9"
+    order: 4
+    api-key: sk-f163b622cce7400bb29f63fbc2f7cab9
     api-secret: ""
-    title: "雾念的千问频道"
-    prompt: ""
+    title: 雾念的千问大模型
+    prompt: 你是要一个大语言模型
+    slogan: 不卡壳的大模型~
   model-list:
   - label: 通义千问
     value: qwen
-    disable: false
+    disabled: false
   - label: 文心一言
     value: wenxin
-    disable: true
+    disabled: true
   - label: 星火大模型
     value: xinghuo
-    disable: true
+    disabled: true
   - label: 天工大模型
     value: tiangong
-    disable: true
+    disabled: true
   - label: DeepSeek
     value: deepseek
-    disable: true
+    disabled: true
   session-setting:
-    chat-scope: 21
-    session-scope: 21
+    chat-scope: 5
+    session-scope: 5
     day-scope: 100

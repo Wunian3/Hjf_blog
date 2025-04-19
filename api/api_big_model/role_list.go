@@ -15,6 +15,7 @@ func (ApiBigModel) RoleListView(c *gin.Context) {
 	list, count, _ := common.ComList(models.BigModelRoleModel{}, common.Option{
 		PageInf: cr,
 		Likes:   []string{"name"},
+		Preload: []string{"Tags"},
 	})
 	res.OkWithList(list, count, c)
 	return

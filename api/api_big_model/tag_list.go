@@ -21,6 +21,7 @@ func (ApiBigModel) TagListView(c *gin.Context) {
 	_list, count, _ := common.ComList(models.BigModelTagModel{}, common.Option{
 		Likes:   []string{"title"},
 		Preload: []string{"Roles"},
+		PageInf: cr,
 	})
 	var list = make([]TagListResponse, 0)
 	for _, model := range _list {
